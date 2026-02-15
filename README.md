@@ -53,7 +53,7 @@ npm run dev
 
 Implement the OpenAI Conversations API and point to your server.
 
-See [Getting Started](docs/getting-started.md) for full setup.
+See [Getting Started](docs/src/1-getting-started/getting-started.md) for full setup.
 
 ## Documentation
 
@@ -61,14 +61,14 @@ See [Getting Started](docs/getting-started.md) for full setup.
 
 | Document | Description |
 |----------|-------------|
-| [Getting Started](docs/getting-started.md) | Installation and setup |
-| [Architecture](docs/architecture.md) | API contract, structure |
-| [Chat Component](docs/chat-component.md) | Using the Chat component |
-| [Configuration](docs/configuration.md) | App configuration |
-| [Styling](docs/styling.md) | Customizing appearance |
-| [Deployment](docs/deployment.md) | Frontend deployment |
-| [Stack](docs/stack.md) | Technology stack |
-| [Plan](docs/plan.md) | Development roadmap |
+| [Getting Started](docs/src/1-getting-started/getting-started.md) | Installation and setup |
+| [Architecture](docs/src/1-getting-started/architecture.md) | API contract, structure |
+| [Chat Component](docs/src/2-features/chat-component.md) | Using the Chat component |
+| [Configuration](docs/src/2-features/configuration.md) | App configuration |
+| [Styling](docs/src/2-features/styling.md) | Customizing appearance |
+| [Deployment](docs/src/3-development/deployment.md) | Frontend deployment |
+| [Stack](docs/src/1-getting-started/stack.md) | Technology stack |
+| [Plan](docs/src/3-development/plan.md) | Development roadmap |
 
 ### Reference Server Docs
 
@@ -92,7 +92,7 @@ Your backend must implement OpenAI Conversations API endpoints:
 - `GET /conversations/:id/items` - List messages
 - `POST /responses` - Generate response (streaming/non-streaming)
 
-See [API Contract](docs/architecture.md#api-contract) for details.
+See [API Contract](docs/src/1-getting-started/architecture.md#api-contract) for details.
 
 **Examples:**
 - Next.js API routes with OpenAI
@@ -107,7 +107,7 @@ See [API Contract](docs/architecture.md#api-contract) for details.
 **Phase 3** ✅ Responses API (Atomic Pattern)
 **Phase 4** 🔄 Azure Deployment (In Progress)
 
-See [Plan](docs/plan.md) for roadmap.
+See [Plan](docs/src/3-development/plan.md) for roadmap.
 
 ## License
 
