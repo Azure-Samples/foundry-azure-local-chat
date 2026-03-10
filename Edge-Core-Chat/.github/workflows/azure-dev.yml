@@ -1,0 +1,76 @@
+name: Deploy to Azure
+
+# Run when commits are pushed to main
+on:
+  workflow_dispatch:
+  # push:
+  #   # Run when commits are pushed to mainline branch (main or master)
+  #   # Set this to the mainline branch you are using
+  #   branches:
+  #     - main
+
+# Set up permissions for deploying with secretless Azure federated credentials
+# https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Azure identity variables — set via `azd pipeline config`
+      AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+      # Template-specific variables — match main.parameters.json
+      ARC_PREFIX: ${{ vars.ARC_PREFIX }}
+      NODE_COUNT: ${{ vars.NODE_COUNT }}
+      VM_SIZE: ${{ vars.VM_SIZE }}
+      AI_PROJECT_ENDPOINT: ${{ vars.AI_PROJECT_ENDPOINT }}
+      AI_MODE: ${{ vars.AI_MODE }}
+      AI_MODEL_NAME: ${{ vars.AI_MODEL_NAME }}
+      AI_MODEL_VERSION: ${{ vars.AI_MODEL_VERSION }}
+      AI_MODEL_CAPACITY: ${{ vars.AI_MODEL_CAPACITY }}
+      DEPLOY_SCOPE: ${{ vars.DEPLOY_SCOPE }}
+      ARC_NAMESPACE: ${{ vars.ARC_NAMESPACE }}
+      # Skip interactive prompts in CI
+      AUTO_YES: "true"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install azd
+        uses: Azure/setup-azd@v2.0.0
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Log in with Azure (Federated Credentials)
+        run: |
+          azd auth login `
+            --client-id "$Env:AZURE_CLIENT_ID" `
+            --federated-credential-provider "github" `
+            --tenant-id "$Env:AZURE_TENANT_ID"
+        shell: pwsh
+
+      - name: Install CLI tools
+        run: |
+          sudo apt-get update && sudo apt-get install -y gettext-base
+          az extension add --name connectedk8s --yes
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Provision Infrastructure
+        run: azd provision --no-prompt
+        env:
+          AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
+
+      # azure.yaml defines no services — K8s deployment runs via the
+      # postup hook (hooks/deploy.sh).  That hook only fires during
+      # `azd up`, not `azd deploy`, so we invoke it directly here.
+      - name: Deploy Application
+        run: bash hooks/deploy.sh --yes
