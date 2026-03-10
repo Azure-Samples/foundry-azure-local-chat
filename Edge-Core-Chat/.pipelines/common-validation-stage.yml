@@ -1,0 +1,61 @@
+stages:
+  - stage: validations
+    displayName: '✅ Validations'
+    dependsOn: []
+    jobs:
+      - job: validations
+        displayName: 'Lint → Typecheck → Build'
+        pool:
+          type: linux
+        variables:
+          ob_outputDirectory: '$(Build.SourcesDirectory)/out'
+          ob_sdl_antimalwareScan_enabled: false
+          ob_sdl_binskim_enabled: false
+          ob_sdl_binskim_scanOutputDirectoryOnly: true
+          ob_sdl_credscan_enabled: false
+          ob_sdl_codeql_buildIdentifier: stage_validations
+          ob_sdl_codeql_language: javascript
+          ob_sdl_codeql_sourceroot: '$(Build.SourcesDirectory)'
+        steps:
+          - task: NodeTool@0
+            displayName: 'Install Node.js'
+            inputs:
+              versionSpec: '$(NODE_VERSION)'
+
+          - task: npmAuthenticate@0
+            displayName: '🔐 NPM Authentication'
+            inputs:
+              workingFile: '$(Build.SourcesDirectory)/.npmrc'
+
+          - task: Npm@1
+            displayName: '📦 npm ci'
+            inputs:
+              command: 'ci'
+              workingDir: '$(Build.SourcesDirectory)'
+
+          - task: Bash@3
+            displayName: '✅ Lint'
+            timeoutInMinutes: 10
+            inputs:
+              targetType: 'inline'
+              script: |
+                set -e
+                npm run lint
+
+          - task: Bash@3
+            displayName: '🔍 Typecheck'
+            timeoutInMinutes: 10
+            inputs:
+              targetType: 'inline'
+              script: |
+                set -e
+                npm run typecheck
+
+          - task: Bash@3
+            displayName: '🏗️ Build'
+            timeoutInMinutes: 10
+            inputs:
+              targetType: 'inline'
+              script: |
+                set -e
+                npm run build

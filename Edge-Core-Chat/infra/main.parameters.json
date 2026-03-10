@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "prefix": { "value": "${ARC_PREFIX}" },
+    "location": { "value": "${AZURE_LOCATION}" },
+    "nodeCount": { "value": "${NODE_COUNT}" },
+    "vmSize": { "value": "${VM_SIZE}" },
+    "aiProjectEndpoint": { "value": "${AI_PROJECT_ENDPOINT}" },
+    "aiMode": { "value": "${AI_MODE}" },
+    "aiModelName": { "value": "${AI_MODEL_NAME}" },
+    "aiModelVersion": { "value": "${AI_MODEL_VERSION}" },
+    "aiModelCapacity": { "value": "${AI_MODEL_CAPACITY}" },
+    "deployScope": { "value": "${DEPLOY_SCOPE}" },
+    "namespace": { "value": "${ARC_NAMESPACE}" }
+  }
+}

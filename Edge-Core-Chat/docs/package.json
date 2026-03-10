@@ -1,0 +1,20 @@
+{
+  "name": "edge-core-chat-docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev --port 4179",
+    "build": "vitepress build",
+    "build:static": "vitepress build --base=./",
+    "preview": "vitepress preview",
+    "deploy:azure": "../scripts/deploy-docs-to-azure.sh"
+  },
+  "devDependencies": {
+    "mermaid": "^11.12.3",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-mermaid": "^2.0.17",
+    "vitepress-plugin-tree": "^1.1.6",
+    "vitepress-sidebar": "^1.33.1"
+  }
+}

@@ -1,0 +1,45 @@
+trigger: none
+
+pr:
+  branches:
+    include:
+      - '*'
+
+parameters:
+  - name: 'debug'
+    displayName: 'Enable debug output'
+    type: boolean
+    default: false
+
+variables:
+  - template: common-variables.yml
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: OneBranch.Pipelines/GovernedTemplates
+      ref: refs/heads/main
+
+extends:
+  template: v2/OneBranch.NonOfficial.CrossPlat.yml@templates
+  parameters:
+    featureFlags:
+      EnableCDPxPAT: false
+      LinuxHostVersion:
+        Network: KS3
+
+    globalSdl:
+      cg:
+        failOnAlert: false
+      tsa:
+        enabled: false
+      binskim:
+        break: true
+      policheck:
+        break: true
+      eslint:
+        enabled: false
+
+    stages:
+      - template: common-validation-stage.yml@self

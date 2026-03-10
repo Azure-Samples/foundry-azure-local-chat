@@ -1,0 +1,25 @@
+schemaVersion: 1.0.0
+providers:
+- provider: InventoryAsCode
+  version: 1.0.0
+  metadata:
+    isProduction: true
+    accountableOwners:
+      service: 20208a6d-d647-4842-a12b-a56a3b68dfc4
+    routing:
+      defaultAreaPath:
+        org: msazure
+        path: One\Azure Edge and Platform\Experience chat
+- provider: Ownership/CodeReviewers
+  version: 1.0.0
+  metadata:
+    options:
+      allowInheritance: true
+    reviewers:
+    - scope: '[AnyFile]'
+      optional:
+      - noedan
+      - orschneider
+      - shkleb
+      - yfraimorice
+      - ytoledano

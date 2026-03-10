@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${NAMESPACE}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${PREFIX}-backend-sa
+  namespace: ${NAMESPACE}
+  annotations:
+    azure.workload.identity/client-id: "${WI_CLIENT_ID}"
+  labels:
+    azure.workload.identity/use: "true"

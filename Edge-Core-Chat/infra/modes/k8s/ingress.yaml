@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ${PREFIX}-ingress
+  namespace: ${NAMESPACE}
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  tls:
+    - secretName: ${PREFIX}-tls
+  rules:
+    - http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: ${PREFIX}-server
+                port:
+                  number: ${BACKEND_PORT}
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: ${PREFIX}-server
+                port:
+                  number: ${BACKEND_PORT}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ${PREFIX}-frontend
+                port:
+                  number: ${FRONTEND_PORT}
