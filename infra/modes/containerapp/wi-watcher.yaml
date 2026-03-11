@@ -1,0 +1,152 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+# ============================================================
+# Workload Identity Watcher for Container Apps on Arc
+# ============================================================
+# Container Apps on Arc (connected environments) don't support
+# managed identity natively. This watcher works around that by
+# monitoring backend deployment changes and patching in the
+# Workload Identity service account + label.
+#
+# How it works:
+#   1. Uses the K8s watch API (event-driven, not polling)
+#   2. Detects when Container Apps creates/updates a revision
+#   3. Patches the deployment to use our WI service account
+#   4. AKS webhook then injects the federated token into the pod
+#
+# This is a standard K8s controller pattern (same as cert-manager,
+# external-dns, etc.). Uses ~10m CPU and ~32Mi RAM when idle.
+#
+# Can be removed when Microsoft adds managed identity support
+# to Container Apps on connected environments.
+# ============================================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${PREFIX}-wi-watcher
+  namespace: ${NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${PREFIX}-wi-watcher
+  template:
+    metadata:
+      labels:
+        app: ${PREFIX}-wi-watcher
+    spec:
+      serviceAccountName: ${PREFIX}-wi-watcher-sa
+      containers:
+        - name: watcher
+          image: mcr.microsoft.com/azurelinux/base/core:3.0
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              # Pure curl watcher — no kubectl binary needed.
+              # Uses K8s API directly with the mounted service account token.
+              API="https://kubernetes.default.svc"
+              SA_DIR="/var/run/secrets/kubernetes.io/serviceaccount"
+              CA="$SA_DIR/ca.crt"
+              NS="${NAMESPACE}"
+              BACKEND="${BACKEND_APP}"
+              SA_WANT="${WI_SA_NAME}"
+
+              kube() {
+                TOKEN=$(cat "$SA_DIR/token")
+                curl -sf --cacert "$CA" -H "Authorization: Bearer $TOKEN" "$@"
+              }
+
+              get_rv() {
+                kube "$API/apis/apps/v1/namespaces/$NS/deployments?limit=1" \
+                  | tr -d '\n ' | grep -o 'resourceVersion":"[0-9]*' | head -1 | grep -o '[0-9]*$'
+              }
+
+              # Check and patch a single deployment if SA is wrong
+              check_and_patch() {
+                local NAME="$1"
+                local CURRENT_SA
+                CURRENT_SA=$(kube "$API/apis/apps/v1/namespaces/$NS/deployments/$NAME" \
+                  | tr -d '\n ' | grep -o '"serviceAccountName":"[^"]*"' | tail -1 | tr -d '"' | cut -d: -f2)
+                [ "$CURRENT_SA" = "$SA_WANT" ] && return 0
+                echo "⚡ SA mismatch on $NAME ($CURRENT_SA → $SA_WANT), patching..."
+                sleep 5
+                kube -X PATCH \
+                  -H "Content-Type: application/json-patch+json" \
+                  "$API/apis/apps/v1/namespaces/$NS/deployments/$NAME" \
+                  -d "[
+                    {\"op\":\"add\",\"path\":\"/spec/template/metadata/labels/azure.workload.identity~1use\",\"value\":\"true\"},
+                    {\"op\":\"replace\",\"path\":\"/spec/template/spec/serviceAccountName\",\"value\":\"$SA_WANT\"}
+                  ]" > /dev/null && echo "✅ Patched $NAME"
+              }
+
+              echo "🔍 WI Watcher starting..."
+
+              # ── Startup check: patch any existing backend deployments ──
+              # Covers the case where backend was deployed before the watcher.
+              echo "🔎 Checking existing deployments..."
+              DEPLOYS=$(kube "$API/apis/apps/v1/namespaces/$NS/deployments" \
+                | tr -d '\n ' | grep -o '"name":"[^"]*' | cut -d'"' -f4)
+              for D in $DEPLOYS; do
+                echo "$D" | grep -q "$BACKEND" && check_and_patch "$D"
+              done
+
+              # ── Watch loop: react to future changes ──
+              echo "👀 Watching for deployment changes..."
+              while true; do
+                RV=$(get_rv)
+                if [ -z "$RV" ]; then
+                  echo "⚠️ Could not get resourceVersion, retrying in 10s..."
+                  sleep 10
+                  continue
+                fi
+
+                kube -N "$API/apis/apps/v1/namespaces/$NS/deployments?watch=1&resourceVersion=$RV&timeoutSeconds=300" | while read -r LINE; do
+                  # Only act on backend deployments
+                  echo "$LINE" | grep -q "$BACKEND" || continue
+
+                  DEPLOY_NAME=$(echo "$LINE" | tr -d '\n ' | grep -o '"name":"[^"]*' | head -1 | cut -d'"' -f4)
+                  [ -z "$DEPLOY_NAME" ] && continue
+
+                  check_and_patch "$DEPLOY_NAME"
+                done
+                echo "🔄 Watch expired, reconnecting..."
+                sleep 2
+              done
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 50m
+              memory: 64Mi
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${PREFIX}-wi-watcher-sa
+  namespace: ${NAMESPACE}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ${PREFIX}-wi-watcher-role
+  namespace: ${NAMESPACE}
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ${PREFIX}-wi-watcher-binding
+  namespace: ${NAMESPACE}
+subjects:
+  - kind: ServiceAccount
+    name: ${PREFIX}-wi-watcher-sa
+    namespace: ${NAMESPACE}
+roleRef:
+  kind: Role
+  name: ${PREFIX}-wi-watcher-role
+  apiGroup: rbac.authorization.k8s.io

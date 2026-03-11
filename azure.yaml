@@ -1,0 +1,38 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+name: edge-core-chat
+metadata:
+  template: edge-core-chat@1.0.0
+requiredVersions:
+  azd: ">=1.14.0"
+
+infra:
+  provider: bicep
+  path: ./infra
+
+hooks:
+  preprovision:
+    windows:
+      shell: pwsh
+      run: hooks/preprovision.ps1
+      interactive: true
+    posix:
+      shell: sh
+      run: bash hooks/preprovision.sh
+      interactive: true
+  postprovision:
+    windows:
+      shell: pwsh
+      run: hooks/postprovision.ps1
+    posix:
+      shell: sh
+      run: bash hooks/postprovision.sh
+  postup:
+    windows:
+      shell: pwsh
+      run: hooks/deploy.ps1
+      interactive: true
+    posix:
+      shell: sh
+      run: bash hooks/deploy.sh
+      interactive: true
