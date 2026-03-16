@@ -60,3 +60,4 @@ server/.env
 .config/
 owners.txt
 es-metadata.yml
+.azure
