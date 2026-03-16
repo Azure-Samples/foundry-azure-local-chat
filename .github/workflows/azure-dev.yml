@@ -68,11 +68,16 @@ jobs:
         shell: pwsh
 
       # Provision Azure resources defined in /infra (AKS, ACR, AI Foundry, etc.)
+      # AUTO_YES skips interactive prompts in the preprovision hook
       - name: Provision Infrastructure
         run: azd provision --no-prompt
         env:
+          AUTO_YES: "true"
           AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
 
       # Build and deploy application to the provisioned infrastructure
+      # AUTO_YES skips the deploy confirmation prompt
       - name: Deploy Application
         run: azd deploy --no-prompt
+        env:
+          AUTO_YES: "true"
