@@ -7,7 +7,7 @@ const TEXT = {
 
   // Chat
   "chat.name": "Edge AI Chat",
-  "chat.placeholder": "Message Copilot",
+  "chat.placeholder": "Message chat",
   "chat.ariaLabel": "Edge AI Chat",
   "chat.emptyState": "How can I help you today?",
   "chat.welcomeTitle": "Hi, how can I help you?",

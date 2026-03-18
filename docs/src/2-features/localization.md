@@ -48,7 +48,7 @@ function MyComponent() {
 |-----|---------------|
 | `chat.welcomeTitle` | `"Hi, how can I help you?"` |
 | `chat.name` | `"Edge AI Chat"` |
-| `chat.placeholder` | `"Message Copilot"` |
+| `chat.placeholder` | `"Message chat"` |
 | `chat.ariaLabel` | `"Edge AI Chat"` |
 | `chat.aiDisclaimer` | `"AI-generated content may be incorrect"` |
 | `chat.promptStartersLabel` | `"Suggested prompts"` |
