@@ -24,7 +24,9 @@ require_cli "az"
 require_cli "azd"
 validate_or_exit
 
+set -a
 eval "$(azd env get-values | grep -v '^#')" || { echo "❌ Failed to load azd env values"; exit 1; }
+set +a
 DEPLOY_MODE="${DEPLOY_MODE:-k8s}"
 
 # ─── Cross-RG RBAC note ──────────────────────────────────────
