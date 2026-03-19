@@ -97,7 +97,7 @@ require_az_login() {
     command -v az &>/dev/null || return
     if ! az account show &>/dev/null 2>&1; then
         echo "  ⚠️  Azure CLI not logged in — launching az login..."
-        if ! az login --output none 2>/dev/null; then
+        if ! az login --output none; then
             _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ Not logged into Azure CLI — run: az login"
         fi
     fi

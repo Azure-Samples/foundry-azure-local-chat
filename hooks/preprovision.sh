@@ -45,6 +45,7 @@ INFRA_DIR="$(cd "$SCRIPT_DIR/../infra" && pwd)"
 source "$INFRA_DIR/validate.sh"
 require_cli "az"
 require_cli "azd"
+require_az_login
 validate_or_exit
 
 source "$INFRA_DIR/prompts.sh"
