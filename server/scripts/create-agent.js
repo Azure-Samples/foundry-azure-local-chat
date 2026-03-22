@@ -1,6 +1,6 @@
+#!/usr/bin/env node
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-#!/usr/bin/env node
 // ═══════════════════════════════════════════════════════════════
 // create-agent.js — Create an AI Foundry agent via SDK
 // ═══════════════════════════════════════════════════════════════
