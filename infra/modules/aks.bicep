@@ -34,6 +34,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-01-01' = {
         vmSize: vmSize
         mode: 'System'
         osType: 'Linux'
+        osSKU: 'AzureLinux'
       }
     ]
     oidcIssuerProfile: {
