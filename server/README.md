@@ -1,8 +1,8 @@
 # Server
 
-Express backend server implementing the **Responses API (Atomic Pattern)** with Azure AI Foundry integration.
+Express backend server implementing the **Responses API (Atomic Pattern)** with Microsoft Foundry integration.
 
-> **Note:** This is a reference implementation. Pure proxy to Azure AI Foundry - you can replace with your own backend (OpenAI, custom AI, etc.) as long as it implements the API contract.
+> **Note:** This is a reference implementation. Pure proxy to Microsoft Foundry - you can replace with your own backend (OpenAI, custom AI, etc.) as long as it implements the API contract.
 
 ## Quick Start
 
@@ -29,7 +29,7 @@ DATASOURCES=api
 # Streaming: "enabled" or "disabled" (toggleable at runtime)
 STREAMING=enabled
 
-# Azure AI Foundry (required when DATASOURCES=api)
+# Microsoft Foundry (required when DATASOURCES=api)
 AI_PROJECT_ENDPOINT=https://your-project.services.ai.azure.com/api/projects/your-project
 AI_AGENT_ID=your-agent-name:version
 ```
@@ -38,7 +38,7 @@ AI_AGENT_ID=your-agent-name:version
 
 | Value  | Description                              |
 | ------ | ---------------------------------------- |
-| `api`  | Azure AI Foundry (default)               |
+| `api`  | Microsoft Foundry (default)               |
 | `mock` | In-memory mock storage (no Azure needed) |
 
 Toggle at runtime:
@@ -74,7 +74,7 @@ When running locally, each developer needs the **Azure AI Developer** role on th
 
 Ask your project admin to grant it via Azure Portal:
 
-1. Search for your AI Services resource (e.g. `edge-ai-chat-foundry-or`)
+1. Search for your foundry resource
 2. Go to **Access control (IAM)** → **+ Add** → **Add role assignment**
 3. Select **Azure AI Developer** → assign to the developer's Microsoft account
 
@@ -103,7 +103,7 @@ This server implements the **Atomic Pattern** (Responses API):
 
 - Express.js 4.x
 - TypeScript
-- `@azure/ai-projects` - Azure AI Foundry SDK
+- `@azure/ai-projects` - Microsoft Foundry SDK
 - `openai` package for API types
 - `@azure/identity` for authentication
 - CORS with configurable origins
@@ -246,7 +246,7 @@ Routes consume a **`DataProvider`** interface (`server/providers/types.ts`). The
 
 | Provider | Class          | Backing Store                           |
 | -------- | -------------- | --------------------------------------- |
-| `api`    | `ApiProvider`  | Azure AI Foundry SDK (`openai` package) |
+| `api`    | `ApiProvider`  | Microsoft Foundry SDK (`openai` package) |
 | `mock`   | `MockProvider` | In-memory `mockStore` (no Azure needed) |
 
 ```

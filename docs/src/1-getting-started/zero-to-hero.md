@@ -8,7 +8,7 @@ A guided path through the repo - from first run to production deployment.
 
 ## 1. Understand What This Is
 
-Edge-Core-Chat is a **pluggable chat UI** that connects to any backend implementing the OpenAI Conversations API. It ships with a reference server (Express + Azure AI Foundry) but you can bring your own.
+foundry-azure-local-chat is a **pluggable chat UI** that connects to any backend implementing the OpenAI Conversations API. It ships with a reference server (Express + Microsoft Foundry) but you can bring your own.
 
 ```
 Frontend (React + Fluent UI)  ←→  Any Backend  ←→  Any AI
@@ -20,7 +20,7 @@ Frontend (React + Fluent UI)  ←→  Any Backend  ←→  Any AI
 
 ```bash
 git clone https://your-repo-url
-cd Edge-Core-Chat
+cd foundry-azure-local-chat
 npm install
 npm run dev          # frontend at http://localhost:5173 (mock mode)
 ```
@@ -38,7 +38,7 @@ cd server && npm install && npm run dev   # backend at http://localhost:3001
 
 <LiteTree>
 ---
-- Edge-Core-Chat/
+- foundry-azure-local-chat/
     + src/                          // Frontend React app
         + components/               // Chat, ChatHistory, InputArea
         + hooks/                    // useChatConversation, useStreaming
@@ -51,14 +51,14 @@ cd server && npm install && npm run dev   # backend at http://localhost:3001
         main.tsx
     + server/                       // Reference Express server
         + routes/                   // Express API routes
-        + services/                 // Azure AI Foundry SDK
+        + services/                 // Microsoft Foundry SDK
         + providers/                // DataProvider (Mock + API)
         + middleware/               // CORS, error handling
         index.ts
         Dockerfile
         .env.example
     + infra/                        // Azure infrastructure (Bicep + K8s)
-        + modules/                  // Bicep (AKS, ACR, Identity, RBAC, AI Foundry)
+        + modules/                  // Bicep (AKS, ACR, Identity, RBAC, MS Foundry)
         + modes/
             + k8s/                  // K8s manifests + deploy script
             + containerapp/         // Container Apps deploy + WI watcher
@@ -125,7 +125,7 @@ Two modes - pick one:
 The fastest way is with a recipe - it sets all defaults for you:
 
 ```bash
-azd env set RECIPE all    # full stack + AI Foundry
+azd env set RECIPE all    # full stack + MS Foundry
 azd up                    # prompts for subscription + location, recipe handles the rest
 ```
 
@@ -135,7 +135,7 @@ Available recipes:
 
 | Recipe | What you get                                                   |
 | ------ | -------------------------------------------------------------- |
-| `all`  | Full stack + AI Foundry (gpt-4o-mini, D2s_v3, 2 nodes)         |
+| `all`  | Full stack + MS Foundry (gpt-4o-mini, D2s_v3, 2 nodes)         |
 | `dev`  | Full stack + mock AI (B2s cheapest VM, admin enabled, CORS=\*) |
 
 Or run `azd up` without `RECIPE` for the interactive wizard (arrow-key navigation for region, VM size, AI mode, deploy scope, etc.).
@@ -175,7 +175,7 @@ npm run build        # production build
 | Run frontend only    | `npm run dev`                                            |
 | Run with server      | `npm run dev` + `cd server && npm run dev`               |
 | Use mock data        | `DATASOURCES=mock` in `server/.env`                      |
-| Use AI Foundry       | `DATASOURCES=api` + set `AI_PROJECT_ENDPOINT`            |
+| Use MS Foundry       | `DATASOURCES=api` + set `AI_PROJECT_ENDPOINT`            |
 | Deploy full stack    | `azd env set RECIPE all && azd up`                       |
 | Deploy frontend only | `azd env set DEPLOY_SCOPE "frontend"` + `azd up`         |
 | Change theme         | `?theme=dark` in URL                                     |

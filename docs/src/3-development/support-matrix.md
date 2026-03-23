@@ -1,4 +1,4 @@
-# Edge-Core-Chat — Support Matrix
+# foundry-azure-local-chat — Support Matrix
 
 ## Deployment Configurations
 
@@ -44,7 +44,7 @@
 | AKS + OIDC + Workload Identity | ✅ | Bicep creates all |
 | ACR + image build | ✅ | az acr build in deploy |
 | Arc connection | ✅ | postprovision hook |
-| AI Foundry hub + project | ✅ | Bicep creates both |
+| MS Foundry hub + project | ✅ | Bicep creates both |
 | Model deployment | ✅ | Bicep, fixed name `${prefix}-chat` |
 | RBAC (create mode) | ✅ | postprovision via az CLI |
 | Agent creation | ✅ | Node.js SDK script |
@@ -58,7 +58,7 @@
 | Feature | Status | What to test |
 |---------|--------|-------------|
 | BYO mode RBAC | ⚠️ | Test with AI in different RG + subscription |
-| BYO auto-detect RG | ⚠️ | Test with real AI Foundry endpoint |
+| BYO auto-detect RG | ⚠️ | Test with real MS Foundry endpoint |
 | Scope change cleanup | ⚠️ | Test all→backend, all→frontend transitions |
 | AI mode change cleanup | ⚠️ | Test create→mock with delete prompt |
 | Infra detection (new machine) | ✅ | `infra/defaults.sh` auto-detects from Azure resources + RG tags |

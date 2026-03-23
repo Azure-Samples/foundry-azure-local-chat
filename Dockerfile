@@ -1,6 +1,6 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
-# Frontend Dockerfile — Multi-stage build for Edge-Core-Chat UI
+# Frontend Dockerfile — Multi-stage build for foundry-azure-local-chat UI
 # Builds the Vite/React app and serves via nginx
 
 FROM mcr.microsoft.com/azurelinux/base/nodejs:20 AS builder

@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 /**
  * Azure AI Service
- * Handles Azure AI Foundry client initialization and operations
+ * Handles Microsoft Foundry client initialization and operations
  *
  * Authentication: Uses Azure Entra ID (DefaultAzureCredential) - the recommended
- * authentication method for Azure AI Foundry.
+ * authentication method for Microsoft Foundry.
  *
  * DefaultAzureCredential automatically handles:
  * - Local dev: az login

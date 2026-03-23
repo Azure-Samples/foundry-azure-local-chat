@@ -2,12 +2,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 // ═══════════════════════════════════════════════════════════════
-// create-agent.js — Create an AI Foundry agent via SDK
+// create-agent.js — Create an MS Foundry agent via SDK
 // ═══════════════════════════════════════════════════════════════
 // Usage:  node scripts/create-agent.js
 // Env:    AI_PROJECT_ENDPOINT  (required)
 //         AI_MODEL_DEPLOYMENT  (default: gpt-4o-mini)
-//         AGENT_NAME           (default: edge-chat-agent)
+//         AGENT_NAME           (default: foundry-chat-agent)
 //         AGENT_INSTRUCTIONS   (optional override)
 // Output: prints AGENT_ID=<name>:<version> on success
 // ═══════════════════════════════════════════════════════════════
@@ -17,8 +17,8 @@ import { DefaultAzureCredential } from "@azure/identity";
 
 const endpoint = process.env.AI_PROJECT_ENDPOINT;
 const model = process.env.AI_MODEL_DEPLOYMENT || process.env.AI_MODEL_NAME || "gpt-4o-mini";
-const agentName = process.env.AGENT_NAME || "edge-chat-agent";
-const instructions = process.env.AGENT_INSTRUCTIONS || "You are a helpful AI assistant for the Edge Core Chat application.";
+const agentName = process.env.AGENT_NAME || "foundry-chat-agent";
+const instructions = process.env.AGENT_INSTRUCTIONS || "You are a helpful AI assistant for the Foundry Azure Local Chat application.";
 
 if (!endpoint) {
   console.error("❌ AI_PROJECT_ENDPOINT is required");

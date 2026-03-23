@@ -1,6 +1,6 @@
-# Edge Core Chat Documentation
+# Foundry Azure Local Chat Documentation
 
-Documentation site for Edge Core Chat built with [VitePress](https://vitepress.dev/).
+Documentation site for Foundry Azure Local Chat built with [VitePress](https://vitepress.dev/).
 
 ## Development
 

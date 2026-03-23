@@ -4,7 +4,7 @@ order: 4
 
 # Localization
 
-Edge Core Chat supports localization with all UI strings externalized.
+Foundry Azure Local Chat supports localization with all UI strings externalized.
 
 ## Overview
 
@@ -47,9 +47,9 @@ function MyComponent() {
 | Key | Default Value |
 |-----|---------------|
 | `chat.welcomeTitle` | `"Hi, how can I help you?"` |
-| `chat.name` | `"Edge AI Chat"` |
+| `chat.name` | `"Foundry Azure Local Chat"` |
 | `chat.placeholder` | `"Message chat"` |
-| `chat.ariaLabel` | `"Edge AI Chat"` |
+| `chat.ariaLabel` | `"Foundry Azure Local Chat"` |
 | `chat.aiDisclaimer` | `"AI-generated content may be incorrect"` |
 | `chat.promptStartersLabel` | `"Suggested prompts"` |
 | `chat.promptStartersShowMore` | `"See more"` |
@@ -85,7 +85,7 @@ getText('myFeature.description', 'dynamic')
 export const es = {
   chat: {
     welcomeTitle: '¡Hola, cómo puedo ayudarte?',
-    name: 'Edge AI Chat',
+    name: 'Foundry Azure Local Chat',
     // ... all other strings
   },
 };
@@ -123,8 +123,8 @@ greeting: 'Hello {0}, welcome to {1}!',
 getText('sendPrompt', 'Help me write')
 // → "Send prompt: Help me write"
 
-getText('greeting', 'John', 'Edge AI Chat')
-// → "Hello John, welcome to Edge AI Chat!"
+getText('greeting', 'John', 'Foundry Azure Local Chat')
+// → "Hello John, welcome to Foundry Azure Local Chat!"
 ```
 
 ## Best Practices

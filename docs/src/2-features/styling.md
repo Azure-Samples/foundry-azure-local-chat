@@ -4,7 +4,7 @@ order: 5
 
 # Styling
 
-Edge Core Chat uses Griffel (CSS-in-JS) for styling with a typed style system.
+Foundry Azure Local Chat uses Griffel (CSS-in-JS) for styling with a typed style system.
 
 ## Overview
 

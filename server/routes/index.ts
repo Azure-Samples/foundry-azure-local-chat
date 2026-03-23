@@ -3,7 +3,7 @@
 /**
  * Routes index - Register all routes
  *
- * Azure AI Foundry Responses API (conversations + responses)
+ * Microsoft Foundry Responses API (conversations + responses)
  *
  * Data Sources (DATASOURCES env var):
  * - "mock" - Start with mock (toggleable at runtime)

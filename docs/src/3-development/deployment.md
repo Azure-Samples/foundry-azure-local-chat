@@ -6,9 +6,9 @@ order: 1
 
 ## Overview
 
-Edge Core Chat is a **static frontend** that connects to any backend implementing the [API contract](/1-getting-started/architecture.md#api-contract).
+Foundry Azure Local Chat is a **static frontend** that connects to any backend implementing the [API contract](/1-getting-started/architecture.md#api-contract).
 
-For the reference server (Express + Azure AI Foundry), two deployment modes are available via `azd` (Azure Developer CLI), both running on Arc-connected AKS clusters.
+For the reference server (Express + Microsoft Foundry), two deployment modes are available via `azd` (Azure Developer CLI), both running on Arc-connected AKS clusters.
 
 ```mermaid
 graph TB
@@ -25,7 +25,7 @@ graph TB
 
     CA_FE -->|API calls| CA_BE
     K8_FE -->|API calls| K8_BE
-    CA_BE -->|Workload Identity| AI["Azure AI Foundry"]
+    CA_BE -->|Workload Identity| AI["Microsoft Foundry"]
     K8_BE -->|Workload Identity| AI
 
     style CA fill:#0d6e3e,color:#fff
@@ -65,7 +65,7 @@ Running `azd up` without setting `RECIPE` launches an interactive setup wizard (
 **Key behaviors:**
 
 - **Infrastructure locking**: After first provision (`PROVISION_DONE=true`), infra settings are locked. The wizard shows current values but disables selectors. Run `azd down` first to unlock.
-- **AI create mode**: Provisions an AI Foundry hub, project, and model deployment. The wizard queries available models/quota in your region. After Bicep provision, `server/scripts/create-agent.js` creates the agent via Node.js SDK.
+- **AI create mode**: Provisions an MS Foundry hub, project, and model deployment. The wizard queries available models/quota in your region. After Bicep provision, `server/scripts/create-agent.js` creates the agent via Node.js SDK.
 - **Quota validation**: In create mode, the wizard checks TPM quota for the selected model before proceeding. If insufficient, it offers to adjust capacity or pick a different model.
 - **Cleanup on config change**: When narrowing deploy scope or switching AI mode from `create` to another mode, the wizard prompts whether to clean up the now-unused resources.
 - **Existing infra detection**: `infra/defaults.sh` (or `infra/defaults.ps1` on Windows) auto-detects AKS, ACR, identity from Azure, reads config from RG tags, and derives AI mode from hub existence. See [Resume / New Machine](#resume--new-machine).
@@ -174,7 +174,7 @@ All mode scripts also verify `az login` status. Az extensions are auto-installed
 
 ```bash
 azd init
-azd env set RECIPE all    # full stack + AI Foundry (gpt-4o-mini, D2s_v3, 2 nodes)
+azd env set RECIPE all    # full stack + MS Foundry (gpt-4o-mini, D2s_v3, 2 nodes)
 azd up                    # prompts for subscription + location, recipe handles the rest
 ```
 
@@ -275,7 +275,7 @@ Switch with `azd env set DEPLOY_MODE`:
 
 | Variable              | Required          | Description                                                                                                                                                |
 | --------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `RECIPE`              | optional          | Deployment recipe: `all` (full stack + AI Foundry), `dev` (mock + cheapest VM), or empty for interactive wizard                                            |
+| `RECIPE`              | optional          | Deployment recipe: `all` (full stack + MS Foundry), `dev` (mock + cheapest VM), or empty for interactive wizard                                            |
 | `ARC_PREFIX`          | auto              | Auto-derived from azd environment name — do NOT set manually                                                                                               |
 | `NODE_COUNT`          | ✅                | AKS node count (e.g. `2`)                                                                                                                                  |
 | `VM_SIZE`             | ✅                | AKS VM size (e.g. `Standard_D4s_v3` or `Standard_D2s_v3`)                                                                                                  |
@@ -283,19 +283,19 @@ Switch with `azd env set DEPLOY_MODE`:
 | `DEPLOY_SCOPE`        | optional          | `all` (default), `frontend`, or `backend`                                                                                                                  |
 | `AZURE_LOCATION`      | auto              | Set during `azd init` (region dropdown)                                                                                                                    |
 | `CUSTOM_LOCATION_OID` | containerapp only | Custom Locations RP Object ID ([how to get](#getting-custom-location-oid))                                                                                 |
-| `AI_RESOURCE_GROUP`   | optional          | RG containing AI Foundry — enables cross-RG RBAC via postprovision hook (not injected into pods). Safe for `azd down` — only your deployment RG is tracked |
+| `AI_RESOURCE_GROUP`   | optional          | RG containing MS Foundry — enables cross-RG RBAC via postprovision hook (not injected into pods). Safe for `azd down` — only your deployment RG is tracked |
 | `AZURE_WI_CLIENT_ID`  | auto              | Managed Identity client ID — set by Bicep output                                                                                                           |
 
 **AI configuration (wizard step ③):**
 
 | Variable              | Default       | Description                                                                                                   |
 | --------------------- | ------------- | ------------------------------------------------------------------------------------------------------------- |
-| `AI_MODE`             | `byo`         | `create` (auto-provision AI Foundry), `byo` (existing project), or `mock` (dummy responses). Auto-derived from hub existence on resume |
+| `AI_MODE`             | `byo`         | `create` (auto-provision MS Foundry), `byo` (existing project), or `mock` (dummy responses). Auto-derived from hub existence on resume |
 | `AI_MODEL_NAME`       | `gpt-4o-mini` | Model to deploy (create mode only)                                                                            |
 | `AI_MODEL_VERSION`    | `2024-07-18`  | Model version (create mode only)                                                                              |
 | `AI_MODEL_CAPACITY`   | `1`           | Model capacity in K TPM (create mode only) — validated against quota                                          |
-| `AI_PROJECT_ENDPOINT` | -             | Azure AI Foundry endpoint (required for `byo` mode, auto-set in `create` mode)                                |
-| `AI_AGENT_ID`         | -             | AI Foundry agent ID (required for `byo` mode, auto-created in `create` mode, persisted as RG tag)              |
+| `AI_PROJECT_ENDPOINT` | -             | Microsoft Foundry endpoint (required for `byo` mode, auto-set in `create` mode)                                |
+| `AI_AGENT_ID`         | -             | MS Foundry agent ID (required for `byo` mode, auto-created in `create` mode, persisted as RG tag)              |
 
 **Wizard state (set automatically, do not edit manually):**
 
@@ -335,12 +335,12 @@ Requests are what Kubernetes **reserves** on the node (affects scheduling). Limi
 | Variable              | Default     | Description                                                                                                           |
 | --------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------- |
 | `VITE_API_URL`        | auto-detect | Backend API URL - required for `DEPLOY_SCOPE=frontend`, auto-detected otherwise                                       |
-| `DATASOURCES`         | `mock`      | `mock` (no AI needed) or `api` (Azure AI Foundry) — auto-set by wizard based on `AI_MODE`                             |
+| `DATASOURCES`         | `mock`      | `mock` (no AI needed) or `api` (Microsoft Foundry) — auto-set by wizard based on `AI_MODE`                             |
 | `STREAMING`           | `enabled`   | `enabled` or `disabled` - SSE streaming for responses                                                                 |
 | `ENABLE_ADMIN_ROUTES` | `false`     | Enable `/api/admin/*` endpoints for runtime toggles                                                                   |
 | `CORS_ORIGINS`        | `auto`      | Allowed origins — `auto` detects from frontend ingress URL at deploy time. Set `*` for all origins, or a specific URL |
-| `AI_PROJECT_ENDPOINT` | -           | Azure AI Foundry endpoint — see [AI configuration](#environment-variables) table above                                |
-| `AI_AGENT_ID`         | -           | AI Foundry agent ID — see [AI configuration](#environment-variables) table above                                      |
+| `AI_PROJECT_ENDPOINT` | -           | Microsoft Foundry endpoint — see [AI configuration](#environment-variables) table above                                |
+| `AI_AGENT_ID`         | -           | MS Foundry agent ID — see [AI configuration](#environment-variables) table above                                      |
 
 ### Deploy Scope (BYOB)
 
@@ -377,7 +377,7 @@ flowchart LR
     A["Pod created"] --> B["AKS Webhook"]
     B --> C["OIDC via Azure AD"]
     C --> D["Access token"]
-    D --> E["AI Foundry ✅"]
+    D --> E["MS Foundry ✅"]
 
     style B fill:#0366d6,color:#fff
     style E fill:#0d6e3e,color:#fff
@@ -385,8 +385,8 @@ flowchart LR
 
 - **Per-pod scoping**: only the backend gets an Azure identity
 - **Frontend**: no identity needed (serves static files)
-- **RBAC**: `Cognitive Services User` + `OpenAI Contributor` + `Azure AI Developer` roles, scoped to the AI Foundry resource group
-- **Cross-RG support**: AI Foundry can live in a different resource group - set `AI_RESOURCE_GROUP` and the postprovision hook assigns RBAC roles via `az role assignment create`. This is done outside Bicep intentionally so `azd down` only deletes your deployment's resource group, not the shared AI Foundry RG
+- **RBAC**: `Cognitive Services User` + `OpenAI Contributor` + `Azure AI Developer` roles, scoped to the MS Foundry resource group
+- **Cross-RG support**: MS Foundry can live in a different resource group - set `AI_RESOURCE_GROUP` and the postprovision hook assigns RBAC roles via `az role assignment create`. This is done outside Bicep intentionally so `azd down` only deletes your deployment's resource group, not the shared MS Foundry RG
 - **No code changes**: `DefaultAzureCredential` in the server handles everything automatically
 
 **How identity works per mode:**
@@ -399,15 +399,15 @@ flowchart LR
 | **Handled by**    | `postprovision.sh` (SA) + `deploy.sh` (pod label) | `postprovision.sh` (SA) + `deploy.sh` (patch + watcher)                                            |
 | **User action**   | None - fully automatic                            | None - fully automatic                                                                             |
 
-**Connecting to AI Foundry (API mode):**
+**Connecting to MS Foundry (API mode):**
 
 ```bash
-# Set your AI Foundry details
+# Set your MS Foundry details
 azd env set AI_PROJECT_ENDPOINT "https://<name>.cognitiveservices.azure.com/api/projects/<project>"
 azd env set AI_AGENT_ID "<agent-name>:<version>"
 azd env set DATASOURCES "api"
 
-# If AI Foundry is in a different resource group than the AKS cluster:
+# If MS Foundry is in a different resource group than the AKS cluster:
 azd env set AI_RESOURCE_GROUP "<rg-containing-ai-foundry>"
 
 # Find the resource group if needed:
@@ -417,12 +417,12 @@ az cognitiveservices account list --query "[].{name:name, resourceGroup:resource
 azd up
 ```
 
-#### Connecting an existing cluster to AI Foundry
+#### Connecting an existing cluster to MS Foundry
 
-Already deployed with mock mode and want to switch to AI Foundry? Use the standalone hook - no re-provisioning needed:
+Already deployed with mock mode and want to switch to MS Foundry? Use the standalone hook - no re-provisioning needed:
 
 ```bash
-# Set the AI Foundry vars
+# Set the MS Foundry vars
 azd env set AI_PROJECT_ENDPOINT "https://<name>.cognitiveservices.azure.com/api/projects/<project>"
 azd env set AI_AGENT_ID "<agent-name>:<version>"
 azd env set AI_RESOURCE_GROUP "<rg-containing-ai-foundry>"
@@ -434,18 +434,18 @@ azd env set AI_RESOURCE_GROUP "<rg-containing-ai-foundry>"
 ./hooks/connect-foundry.sh -y
 ```
 
-This assigns the required RBAC roles (Cognitive Services User, OpenAI Contributor, Azure AI Developer) on the AI Foundry resource group, sets `DATASOURCES=api`, and redeploys the backend. No cluster re-provisioning required.
+This assigns the required RBAC roles (Cognitive Services User, OpenAI Contributor, Azure AI Developer) on the MS Foundry resource group, sets `DATASOURCES=api`, and redeploys the backend. No cluster re-provisioning required.
 
 ### Container Apps Workload Identity Workaround
 
-Container Apps on Arc (connected environments) **do not support managed identity natively**. To enable Workload Identity for AI Foundry access, the deploy script applies a workaround:
+Container Apps on Arc (connected environments) **do not support managed identity natively**. To enable Workload Identity for MS Foundry access, the deploy script applies a workaround:
 
 1. **On deploy**: the script patches the K8s deployment created by Container Apps to use our Workload Identity service account and pod label
 2. **WI watcher**: a lightweight pod (`wi-watcher`) that:
    - **On startup**: immediately scans all existing deployments and patches any SA mismatches (handles deploy-before-watcher race)
    - **On watch**: monitors for deployment changes via the K8s watch API (event-driven, not polling). When Container Apps creates a new revision (e.g. from Portal or `az containerapp update`), the watcher automatically re-applies the WI patch
 3. **AKS webhook**: sees the WI label on the pod → injects `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_FEDERATED_TOKEN_FILE`
-4. **DefaultAzureCredential**: picks up the federated token → authenticates to AI Foundry
+4. **DefaultAzureCredential**: picks up the federated token → authenticates to MS Foundry
 
 **Architecture:**
 
@@ -457,7 +457,7 @@ flowchart LR
     end
 
     E --> F["AKS Webhook<br/>injects token"]
-    F --> G["AI Foundry ✅"]
+    F --> G["MS Foundry ✅"]
 
     E -.->|"New revision"| H["Watcher detects<br/>SA change"]
     H -.->|"Auto-patch<br/>WI label + SA"| F
@@ -538,7 +538,7 @@ This enables the **resume-from-any-machine** flow — a fresh clone with just th
 After first provision, you can resume from any machine — no need to re-run the wizard or re-set env vars:
 
 ```bash
-git clone <repo-url> && cd Edge-Core-Chat
+git clone <repo-url> && cd foundry-azure-local-chat
 azd env new <prefix>                              # env name = your existing prefix
 azd env set AZURE_SUBSCRIPTION_ID <sub-id>
 azd up
@@ -604,7 +604,7 @@ flowchart LR
 | Deploy method  | `azd up`                     | `kubectl apply` with pre-pulled images  |
 | Identity       | Workload Identity (Azure AD) | Not needed (local model, no Azure auth) |
 | Image source   | ACR (cloud)                  | Pre-pulled to nodes or local registry   |
-| Backend target | Azure AI Foundry             | Local model endpoint                    |
+| Backend target | Microsoft Foundry             | Local model endpoint                    |
 | Management     | Azure Portal + kubectl       | kubectl only                            |
 | Arc            | Full Azure management        | Cluster runs autonomously up to 30 days |
 
@@ -745,8 +745,8 @@ Any `VITE_*` environment variable is automatically picked up. Below are the supp
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `VITE_APP_TITLE` | `Edge AI Chat` | Browser page title |
-| `VITE_APP_NAME` | `Edge AI Chat` | App display name |
+| `VITE_APP_TITLE` | `Foundry Azure Local Chat` | Browser page title |
+| `VITE_APP_NAME` | `Foundry Azure Local Chat` | App display name |
 | `VITE_APP_FAVICON` | `/favicon.ico` | Favicon path |
 | `VITE_CHAT_MAX_LENGTH` | `4000` | Max input characters |
 | `VITE_CHAT_ENABLE_HISTORY` | `true` | Show conversation history sidebar |
@@ -766,7 +766,7 @@ Any `VITE_*` environment variable is automatically picked up. Below are the supp
 import { env } from "@/runtime";
 
 const apiUrl = env("VITE_API_URL", "/api");
-const title  = env("VITE_APP_TITLE", "Edge AI Chat");
+const title  = env("VITE_APP_TITLE", "Foundry Azure Local Chat");
 ```
 
 ### Docker Run
@@ -777,7 +777,7 @@ docker run -p 80:80 \
   -e VITE_API_MODE=agents \
   -e VITE_AGENT_ID=asst_xxxx \
   -e VITE_APP_TITLE="My Custom Chat" \
-  edge-core-chat-frontend:latest
+  foundry-azure-local-chat-frontend:latest
 ```
 
 ### Kubernetes / Helm
@@ -786,7 +786,7 @@ When deployed via Helm (e.g., Edge-RAG helm chart), inject env vars through the 
 
 ```yaml
 chatUI:
-  image: edgeamlmodels.azurecr.io/unlisted/azurearcai/apps/edge-core-chat-frontend:latest
+  image: youracr.azurecr.io/apps/foundry-azure-local-chat-frontend:latest
   env:
     - name: VITE_API_MODE
       value: "agents"
@@ -843,7 +843,7 @@ Access-Control-Allow-Origin: https://your-frontend-url.com
 
 ### Reference Server
 
-We provide a reference Express server with Azure AI Foundry integration. This is **optional** - you can implement your own backend.
+We provide a reference Express server with Microsoft Foundry integration. This is **optional** - you can implement your own backend.
 
 ## Local Development
 

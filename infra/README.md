@@ -1,6 +1,6 @@
-# Edge-Core-Chat — Infrastructure
+# foundry-azure-local-chat — Infrastructure
 
-Deploy Edge-Core-Chat to Azure Arc-connected AKS clusters using `azd` (Azure Developer CLI).
+Deploy foundry-azure-local-chat to Azure Arc-connected AKS clusters using `azd` (Azure Developer CLI).
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ azd env set DEPLOY_MODE "containerapp"    # or "k8s"
 azd up
 ```
 
-### Minimal K8s + AI Foundry
+### Minimal K8s + MS Foundry
 
 ```bash
 azd init
@@ -70,9 +70,9 @@ azd up
 | `BACKEND_MEMORY_REQUEST` | optional | Backend memory request (default: `256Mi`) |
 | `FRONTEND_MEMORY` | optional | Frontend memory limit (default: `128Mi`) |
 | `FRONTEND_MEMORY_REQUEST` | optional | Frontend memory request (default: `64Mi`) |
-| `DATASOURCES` | optional | `mock` (default) or `api` (Azure AI Foundry) |
-| `AI_PROJECT_ENDPOINT` | when `api` | Azure AI Foundry endpoint |
-| `AI_AGENT_ID` | when `api` | AI Foundry agent ID |
+| `DATASOURCES` | optional | `mock` (default) or `api` (Microsoft Foundry) |
+| `AI_PROJECT_ENDPOINT` | when `api` | Microsoft Foundry endpoint |
+| `AI_AGENT_ID` | when `api` | MS Foundry agent ID |
 | `STREAMING` | optional | `enabled` (default) or `disabled` |
 | `ENABLE_ADMIN_ROUTES` | optional | `false` (default) or `true` |
 | `CORS_ORIGINS` | optional | Allowed origins (auto-detected from frontend URL) |
@@ -104,7 +104,7 @@ hooks/
 ├── preprovision.sh           # Config validation (runs before Bicep)
 ├── postprovision.sh          # RBAC + delegates to modes/<mode>/postprovision.sh
 ├── deploy.sh                 # Delegates to modes/<mode>/deploy.sh
-└── connect-foundry.sh        # Connect existing cluster to AI Foundry (no re-provision)
+└── connect-foundry.sh        # Connect existing cluster to MS Foundry (no re-provision)
 ```
 
 ## How It Works
@@ -127,7 +127,7 @@ azd up
 - Managed Identity + Federated Credential created by Bicep
 - K8s Service Account annotated in postprovision
 - `DefaultAzureCredential` in the server picks it up automatically
-- RBAC scoped to AI Foundry resource only
+- RBAC scoped to MS Foundry resource only
 
 ## Commands
 
@@ -136,7 +136,7 @@ azd up                  # provision + deploy (full)
 azd provision           # infra only
 ./hooks/deploy.sh       # redeploy only (build + apply)
 ./hooks/deploy.sh -y    # redeploy, skip confirmation prompt
-./hooks/connect-foundry.sh  # connect existing cluster to AI Foundry
+./hooks/connect-foundry.sh  # connect existing cluster to MS Foundry
 azd down --force        # tear down everything
 
 # Skip all confirmation prompts (CI/automation)

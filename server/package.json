@@ -1,7 +1,7 @@
 {
-  "name": "edge-core-chat-server",
+  "name": "foundry-azure-local-chat-server",
   "version": "1.0.0",
-  "description": "Backend server for Edge Core Chat with Azure AI Foundry",
+  "description": "Backend server for Foundry Azure Local Chat with Microsoft Foundry",
   "type": "module",
   "main": "index.ts",
   "scripts": {
@@ -15,8 +15,8 @@
     "typecheck:watch": "tsc --noEmit --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "docker:build": "docker build -t edge-chat-server .",
-    "docker:run": "docker run -d --name edge-chat -p 3001:3001 --env-file .env edge-chat-server",
+    "docker:build": "docker build -t foundry-chat-server .",
+    "docker:run": "docker run -d --name foundry-chat -p 3001:3001 --env-file .env foundry-chat-server",
     "seed": "tsx scripts/seed-conversations.ts",
     "seed:batch": "tsx scripts/seed-conversations.ts batch",
     "seed:real": "tsx scripts/seed-conversations.ts real",

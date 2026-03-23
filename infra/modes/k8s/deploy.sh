@@ -223,12 +223,12 @@ azd env set PREV_DEPLOY_SCOPE "$SCOPE" 2>/dev/null || true
 # AI_AGENT_ID IS tagged — not derivable without heavy SDK calls
 RESOURCE_GROUP="${RES_RESOURCE_GROUP}"
 az group update --name "$RESOURCE_GROUP" --tags \
-    edge-chat-deploy-done="true" \
-    edge-chat-recipe="${RECIPE:-custom}" \
-    edge-chat-scope="${SCOPE}" \
-    edge-chat-datasources="${DATASOURCES:-mock}" \
-    edge-chat-streaming="${STREAMING:-enabled}" \
-    edge-chat-cors="${CORS_ORIGINS:-auto}" \
-    edge-chat-admin="${ENABLE_ADMIN_ROUTES:-false}" \
-    edge-chat-agent-id="${AI_AGENT_ID:-}" \
+    foundry-chat-deploy-done="true" \
+    foundry-chat-recipe="${RECIPE:-custom}" \
+    foundry-chat-scope="${SCOPE}" \
+    foundry-chat-datasources="${DATASOURCES:-mock}" \
+    foundry-chat-streaming="${STREAMING:-enabled}" \
+    foundry-chat-cors="${CORS_ORIGINS:-auto}" \
+    foundry-chat-admin="${ENABLE_ADMIN_ROUTES:-false}" \
+    foundry-chat-agent-id="${AI_AGENT_ID:-}" \
     --output none 2>/dev/null || true

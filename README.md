@@ -39,10 +39,8 @@ This project framework provides the following features:
   pods behind an nginx ingress. With Workload Identity and OIDC token exchange through a managed identity, the backend calls the
   MS Foundry agent to generate responses](docs/images/architecture.png)
 
-### Demo Video (TODO)
-
-(Embed demo video here)
-
+### Demo Video
+<video src="docs/demo.mp4" controls width="800"></video>
 
 ## Getting Started
 

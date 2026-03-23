@@ -4,7 +4,7 @@ order: 7
 
 # Custom Hooks
 
-Edge Core Chat provides custom hooks for chat state management, UI behavior, and theming.
+Foundry Azure Local Chat provides custom hooks for chat state management, UI behavior, and theming.
 
 ## Overview
 

@@ -30,7 +30,7 @@ On each run, compare current selections against `PREV_*` values. If they differ,
 
 **Prompt:**
 ```
-⚠️  You previously created AI Foundry resources.
+⚠️  You previously created MS Foundry resources.
     These may still incur charges (model deployment TPM).
 
     What would you like to do?
@@ -103,7 +103,7 @@ kubectl delete deployment/${PREFIX}-server -n $NAMESPACE --ignore-not-found
 kubectl delete service/${PREFIX}-server -n $NAMESPACE --ignore-not-found
 ```
 
-**Risk level:** Low. Backend is stateless (conversations stored in AI Foundry, not locally).
+**Risk level:** Low. Backend is stateless (conversations stored in MS Foundry, not locally).
 
 ---
 

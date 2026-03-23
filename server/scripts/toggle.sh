@@ -2,7 +2,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-# Toggle server settings for Edge-Core-Chat
+# Toggle server settings for foundry-azure-local-chat
 
 set -e
 
@@ -73,7 +73,7 @@ toggle_provider() {
 # Main menu
 main() {
     echo ""
-    echo "🔧 Edge Core Chat - Server Toggle"
+    echo "🔧 Foundry Azure Local Chat - Server Toggle"
     echo "=================================="
     echo ""
     

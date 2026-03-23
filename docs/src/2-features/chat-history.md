@@ -6,7 +6,7 @@ order: 2
 
 ## Overview
 
-Edge Core Chat includes built-in conversation management with a sidebar history interface, allowing users to:
+Foundry Azure Local Chat includes built-in conversation management with a sidebar history interface, allowing users to:
 
 - Create new conversations
 - View conversation history
@@ -84,7 +84,7 @@ Your backend must implement the [API contract](/1-getting-started/architecture.m
 
 ## Backend Requirements
 
-Chat history requires a backend server. The included Azure AI Foundry server (`server/`) provides a reference implementation.
+Chat history requires a backend server. The included Microsoft Foundry server (`server/`) provides a reference implementation.
 
 **Required Environment Variables** (in `server/.env`):
 

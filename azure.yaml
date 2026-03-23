@@ -1,8 +1,8 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
-name: edge-core-chat
+name: foundry-azure-local-chat
 metadata:
-  template: edge-core-chat@1.0.0
+  template: foundry-azure-local-chat@1.0.0
 requiredVersions:
   azd: ">=1.14.0"
 

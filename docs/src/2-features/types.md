@@ -4,7 +4,7 @@ order: 8
 
 # Type System
 
-Edge Core Chat uses types from the `openai` npm package directly, ensuring compatibility with the OpenAI/Azure AI Foundry API contract.
+Foundry Azure Local Chat uses types from the `openai` npm package directly, ensuring compatibility with the OpenAI/Microsoft Foundry API contract.
 
 ## Overview
 

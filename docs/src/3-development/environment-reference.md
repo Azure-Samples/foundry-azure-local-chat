@@ -4,13 +4,13 @@ order: 3
 
 # Environment Reference
 
-Complete reference for all `azd` environment variables used by Edge-Core-Chat. Most are set automatically by the [interactive setup wizard](/3-development/deployment.md#interactive-setup-wizard) — manual `azd env set` is optional.
+Complete reference for all `azd` environment variables used by foundry-azure-local-chat. Most are set automatically by the [interactive setup wizard](/3-development/deployment.md#interactive-setup-wizard) — manual `azd env set` is optional.
 
 ## Infrastructure
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `RECIPE` | - | - | Deployment recipe: `all` (full stack + AI Foundry), `dev` (mock + cheapest VM), or empty for interactive wizard |
+| `RECIPE` | - | - | Deployment recipe: `all` (full stack + MS Foundry), `dev` (mock + cheapest VM), or empty for interactive wizard |
 | `ARC_PREFIX` | auto | - | Auto-derived from azd environment name — do NOT set manually |
 | `NODE_COUNT` | ✅ | - | AKS node count (e.g. `2`) |
 | `VM_SIZE` | ✅ | - | AKS VM size (e.g. `Standard_D2s_v3`) |
@@ -18,7 +18,7 @@ Complete reference for all `azd` environment variables used by Edge-Core-Chat. M
 | `DEPLOY_SCOPE` | - | `all` | `all`, `frontend`, or `backend` |
 | `AZURE_LOCATION` | auto | - | Set during `azd init` (region dropdown) |
 | `CUSTOM_LOCATION_OID` | containerapp | - | Custom Locations RP Object ID ([how to get](/3-development/deployment.md#getting-custom-location-oid)) |
-| `AI_RESOURCE_GROUP` | - | - | RG containing AI Foundry — enables cross-RG RBAC |
+| `AI_RESOURCE_GROUP` | - | - | RG containing MS Foundry — enables cross-RG RBAC |
 | `AZURE_WI_CLIENT_ID` | auto | - | Managed Identity client ID — set by Bicep output |
 
 ## AI Configuration
@@ -27,12 +27,12 @@ Set by wizard step ③. `AI_MODE` determines which other variables are needed.
 
 | Variable | Default | Used in mode | Description |
 |----------|---------|-------------|-------------|
-| `AI_MODE` | `byo` | all | `create` (auto-provision AI Foundry hub, project, model), `byo` (existing project), or `mock` (dummy responses). Auto-derived from hub existence on resume |
+| `AI_MODE` | `byo` | all | `create` (auto-provision MS Foundry hub, project, model), `byo` (existing project), or `mock` (dummy responses). Auto-derived from hub existence on resume |
 | `AI_MODEL_NAME` | `gpt-4o-mini` | create | Model to deploy — wizard shows available models with quota |
 | `AI_MODEL_VERSION` | `2024-07-18` | create | Model version — auto-detected from selected model when possible |
 | `AI_MODEL_CAPACITY` | `1` | create | Model capacity in K TPM — validated against subscription quota before deploy |
-| `AI_PROJECT_ENDPOINT` | - | create, byo | AI Foundry project endpoint. Auto-set in create mode, required in byo mode |
-| `AI_AGENT_ID` | - | create, byo | AI Foundry agent ID (`name:version`). Auto-created in create mode via `server/scripts/create-agent.js`, persisted as RG tag for cross-machine resume |
+| `AI_PROJECT_ENDPOINT` | - | create, byo | MS Foundry project endpoint. Auto-set in create mode, required in byo mode |
+| `AI_AGENT_ID` | - | create, byo | MS Foundry agent ID (`name:version`). Auto-created in create mode via `server/scripts/create-agent.js`, persisted as RG tag for cross-machine resume |
 | `DATASOURCES` | `mock` | all | `mock` or `api` — auto-set by wizard based on AI_MODE |
 
 ## App Settings (pod runtime)
@@ -72,7 +72,7 @@ Set automatically by the setup wizard. These track deployment state for the wiza
 | `PROVISION_DONE` | `true` after first provision — locks infrastructure settings (prefix, region, nodes, VM size). Run `azd down` to unlock |
 | `PREV_DEPLOY_SCOPE` | Previous deploy scope — used to detect scope narrowing and offer cleanup of now-unused pods |
 | `PREV_AI_MODE` | Previous AI mode — used to detect mode changes (e.g. create → mock) and offer resource cleanup |
-| `CLEANUP_AI` | `keep` or `delete` — what to do with AI Foundry resources when switching away from create mode |
+| `CLEANUP_AI` | `keep` or `delete` — what to do with MS Foundry resources when switching away from create mode |
 | `CLEANUP_FRONTEND` | `yes` or `no` — whether to remove frontend pods when narrowing scope |
 | `CLEANUP_BACKEND` | `yes` or `no` — whether to remove backend pods when narrowing scope |
 | `AUTO_YES` | One-shot flag — wizard creates temp file `/tmp/.azd-auto-deploy-<env>`, deploy.sh reads and deletes it |
@@ -82,7 +82,7 @@ Set automatically by the setup wizard. These track deployment state for the wiza
 **Recipe mode (recommended):**
 ```bash
 azd init
-azd env set RECIPE all    # full stack + AI Foundry
+azd env set RECIPE all    # full stack + MS Foundry
 azd up
 ```
 
@@ -106,7 +106,7 @@ azd env set RECIPE all
 azd up -- -y
 ```
 
-**Upgrade mock → AI Foundry:**
+**Upgrade mock → MS Foundry:**
 ```bash
 azd env set AI_PROJECT_ENDPOINT "https://..."
 azd env set AI_AGENT_ID "<agent>:<version>"

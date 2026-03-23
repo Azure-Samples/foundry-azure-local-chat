@@ -10,7 +10,7 @@ Copy-paste recipes for common deployment scenarios using `azd` environments and 
 
 ## Quick Deploy (Recipe: all)
 
-Full stack + AI Foundry with sensible defaults (gpt-4o-mini, D2s_v3, 2 nodes):
+Full stack + MS Foundry with sensible defaults (gpt-4o-mini, D2s_v3, 2 nodes):
 
 ```bash
 # From the project directory:
@@ -19,7 +19,7 @@ azd up
 # azd prompts for subscription + location, recipe handles everything else
 
 # Or from scratch (clone + deploy):
-azd init --template https://github.com/Azure-Samples/founday-azure-local-chat
+azd init --template https://github.com/Azure-Samples/foundry-azure-local-chat
 azd env set RECIPE all
 azd up
 ```
@@ -41,12 +41,12 @@ Run `azd up` without setting `RECIPE` to walk through the interactive wizard wit
 azd up    # wizard prompts for region, VM size, AI mode, deploy scope, etc.
 ```
 
-## BYO AI Foundry
+## BYO MS Foundry
 
 Use the wizard and select `byo` when prompted for AI mode:
 
 ```bash
-azd up    # select "byo" in AI mode step, enter your AI Foundry details
+azd up    # select "byo" in AI mode step, enter your MS Foundry details
 ```
 
 ## Frontend Only (BYOB)
@@ -89,12 +89,12 @@ azd env list
 azd env get-values
 ```
 
-## Connect Existing Cluster to AI Foundry
+## Connect Existing Cluster to MS Foundry
 
-Already running with mock mode? Switch to AI Foundry without re-provisioning:
+Already running with mock mode? Switch to MS Foundry without re-provisioning:
 
 ```bash
-# Set AI Foundry details
+# Set MS Foundry details
 azd env set AI_PROJECT_ENDPOINT "https://<name>.cognitiveservices.azure.com/api/projects/<project>"
 azd env set AI_AGENT_ID "<agent-name>:<version>"
 azd env set AI_RESOURCE_GROUP "<rg-containing-ai-foundry>"
@@ -103,7 +103,7 @@ azd env set AI_RESOURCE_GROUP "<rg-containing-ai-foundry>"
 ./hooks/connect-foundry.sh -y
 ```
 
-This is a standalone operation - no Bicep, no cluster re-provisioning. It assigns RBAC roles on the AI Foundry resource group and redeploys the backend with API settings.
+This is a standalone operation - no Bicep, no cluster re-provisioning. It assigns RBAC roles on the MS Foundry resource group and redeploys the backend with API settings.
 
 To switch back to mock:
 ```bash
@@ -116,7 +116,7 @@ azd env set DATASOURCES "mock"
 On a new machine (or fresh clone), resume an existing deployment with just the prefix and subscription:
 
 ```bash
-git clone <repo-url> && cd Edge-Core-Chat
+git clone <repo-url> && cd foundry-azure-local-chat
 azd env new <existing-prefix>                     # must match original env name
 azd env set AZURE_SUBSCRIPTION_ID <sub-id>
 azd up

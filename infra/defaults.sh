@@ -79,7 +79,7 @@ apply_defaults() {
     if [ -n "$PREFIX" ]; then
         # Single az call: get RG tags + location via JMESPath → tsv
         local TAG_TSV; TAG_TSV=$(az group show --name "$RG" \
-            --query "[location, tags.\"edge-chat-recipe\", tags.\"edge-chat-scope\", tags.\"edge-chat-datasources\", tags.\"edge-chat-streaming\", tags.\"edge-chat-cors\", tags.\"edge-chat-admin\", tags.\"edge-chat-agent-id\", tags.\"edge-chat-deploy-done\"]" \
+            --query "[location, tags.\"foundry-chat-recipe\", tags.\"foundry-chat-scope\", tags.\"foundry-chat-datasources\", tags.\"foundry-chat-streaming\", tags.\"foundry-chat-cors\", tags.\"foundry-chat-admin\", tags.\"foundry-chat-agent-id\", tags.\"foundry-chat-deploy-done\"]" \
             -o tsv 2>/dev/null || echo "")
 
         if [ -n "$TAG_TSV" ]; then

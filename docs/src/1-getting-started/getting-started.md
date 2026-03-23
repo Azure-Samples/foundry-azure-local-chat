@@ -16,7 +16,7 @@ order: 1
 ```bash
 # Clone the repository
 git clone https://your-repo-url
-cd Edge-Core-Chat
+cd foundry-azure-local-chat
 
 # Install dependencies
 npm install
@@ -36,12 +36,12 @@ The app runs at http://localhost:5173 with mock responses enabled by default.
 
 ### Option 2: With Reference Server
 
-To use the included Azure AI Foundry server:
+To use the included Microsoft Foundry server:
 
 ```bash
 # Configure the server
 cp server/.env.example server/.env
-# Edit server/.env with your AI Foundry credentials
+# Edit server/.env with your MS Foundry credentials
 
 # Terminal 1: Start frontend
 npm run dev
@@ -85,7 +85,7 @@ Server-side mock is controlled via `DATASOURCES` env var in server config:
 ```sh
 # server/.env
 DATASOURCES=mock       # Mock only (for UI development)
-DATASOURCES=api        # API only (default - requires Azure AI Foundry)
+DATASOURCES=api        # API only (default - requires Microsoft Foundry)
 ```
 
 Toggle at runtime:
@@ -131,7 +131,7 @@ UI strings in `src/localization/en.ts`.
 
 ## Reference Server
 
-A reference Express server with Azure AI Foundry integration is included in `server/`.
+A reference Express server with Microsoft Foundry integration is included in `server/`.
 
 See [server/README.md](../../../server/README.md) for setup and configuration.
 
@@ -144,7 +144,7 @@ This is optional - implement your own server following the [API contract](./arch
 The fastest way to deploy - a recipe sets all defaults for you:
 
 ```bash
-azd env set RECIPE all    # full stack + AI Foundry (gpt-4o-mini, D2s_v3, 2 nodes)
+azd env set RECIPE all    # full stack + MS Foundry (gpt-4o-mini, D2s_v3, 2 nodes)
 azd up                    # prompts for subscription + location, recipe handles the rest
 ```
 
@@ -152,7 +152,7 @@ Available recipes:
 
 | Recipe | What you get                                                   |
 | ------ | -------------------------------------------------------------- |
-| `all`  | Full stack + AI Foundry (gpt-4o-mini, D2s_v3, 2 nodes)         |
+| `all`  | Full stack + MS Foundry (gpt-4o-mini, D2s_v3, 2 nodes)         |
 | `dev`  | Full stack + mock AI (B2s cheapest VM, admin enabled, CORS=\*) |
 
 > **Note:** `ARC_PREFIX` is auto-derived from the azd environment name. `azd env new my-chat` creates `my-chat-rg`, `my-chat-cluster`, etc.

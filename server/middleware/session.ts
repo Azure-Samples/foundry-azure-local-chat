@@ -10,7 +10,7 @@
 import { randomUUID } from "crypto";
 import type { NextFunction, Request, Response } from "express";
 
-const SESSION_COOKIE_NAME = "edge_chat_session";
+const SESSION_COOKIE_NAME = "foundry_chat_session";
 const SESSION_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 // Extend Express Request to include sessionId

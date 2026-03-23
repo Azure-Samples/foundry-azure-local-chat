@@ -5,8 +5,8 @@ import { generateSidebar } from "vitepress-sidebar";
 import { withMermaid } from "vitepress-plugin-mermaid";
 
 export default withMermaid(defineConfig({
-  title: "Edge Core Chat",
-  description: "Documentation for Edge Core Chat",
+  title: "Foundry Azure Local Chat",
+  description: "Documentation for Foundry Azure Local Chat",
   srcDir: "src",
   outDir: "./dist",
   base: "/",
@@ -39,7 +39,7 @@ export default withMermaid(defineConfig({
       excludeFilesByFrontmatterFieldName: "exclude",
       includeFolderIndexFile: false,
     }),
-    socialLinks: [{ icon: "github", link: "https://github.com/microsoft/Edge-Core-Chat" }],
+    socialLinks: [{ icon: "github", link: "https://github.com/Azure-Samples/foundry-azure-local-chat" }],
     search: {
       provider: "local",
     },

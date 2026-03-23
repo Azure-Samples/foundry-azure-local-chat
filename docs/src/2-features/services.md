@@ -139,7 +139,7 @@ The reference server (`server/`) uses a `DataProvider` interface to abstract dat
     types.ts                      // DataProvider interface
     index.ts                      // getProvider() factory
     + api/
-        ApiProvider.ts            // Azure AI Foundry
+        ApiProvider.ts            // Microsoft Foundry
     + mock/
         MockProvider.ts           // In-memory store
 </LiteTree>

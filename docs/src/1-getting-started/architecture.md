@@ -9,7 +9,7 @@ order: 2
 ```mermaid
 flowchart LR
     A["React App<br/>(Frontend)"] -->|Responses API| B["Your Server<br/>(Backend)"]
-    B -->|Workload Identity| C["Azure AI Foundry<br/>or OpenAI, etc."]
+    B -->|Workload Identity| C["Microsoft Foundry<br/>or OpenAI, etc."]
 
     style A fill:#0366d6,color:#fff
     style B fill:#0d6e3e,color:#fff
@@ -22,7 +22,7 @@ The frontend connects to **any backend** implementing the OpenAI Conversations A
 
 <LiteTree>
 ---
-- Edge-Core-Chat/
+- foundry-azure-local-chat/
     + src/                          // Frontend React app
         components/
         config/                    // App constants + runtime env override
@@ -75,7 +75,7 @@ The reference server uses a `DataProvider` interface to abstract data sources:
 ```mermaid
 flowchart LR
     A["Express Routes"] --> B["getProvider()"]
-    B --> C["ApiProvider<br/>(Azure AI Foundry)"]
+    B --> C["ApiProvider<br/>(Microsoft Foundry)"]
     B --> D["MockProvider<br/>(in-memory)"]
 
     style C fill:#0d6e3e,color:#fff

@@ -1,16 +1,16 @@
 ---
 layout: home
 hero:
-  name: Edge Core Chat
+  name: Foundry Azure Local Chat
   text: Plug-and-Play Chat Baseline
-  tagline: A modern foundation for building AI chat experiences with Azure AI Foundry
+  tagline: A modern foundation for building AI chat experiences with Microsoft Foundry
   actions:
     - theme: brand
       text: Get Started
       link: /1-getting-started/getting-started
     - theme: alt
       text: View on GitHub
-      link: https://github.com/microsoft/Edge-Core-Chat
+      link: https://github.com/Azure-Samples/foundry-azure-local-chat
 features:
   - icon: 💬
     title: Chat Component
