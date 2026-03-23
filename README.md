@@ -40,7 +40,7 @@ This project framework provides the following features:
   MS Foundry agent to generate responses](docs/images/architecture.png)
 
 ### Demo Video
-<video src="docs/demo.mp4" controls width="800"></video>
+ [▶️ Watch the demo](docs/demo.mp4)
 
 ## Getting Started
 
