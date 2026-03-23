@@ -136,4 +136,4 @@ interface ChatConversationReturn {
 }
 ```
 
-The combined types and hook-specific types (`ChatConversationOptions`, `ChatConversationReturn`, `ChatConversationHook`) live in `src/hooks/internals/_types.ts`. See [hooks.md](/2-features/hooks.md) for hook usage and [chat-component.md](/2-features/chat-component.md) for component prop mapping.
+The combined types and hook-specific types (`ChatConversationOptions`, `ChatConversationReturn`, `ChatConversationHook`) live in `src/hooks/internals/_types.ts`. See [hooks.md](/2-guide/hooks.md) for hook usage and [chat-component.md](/2-guide/chat-component.md) for component prop mapping.

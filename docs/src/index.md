@@ -7,7 +7,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /1-getting-started/getting-started
+      link: /1-getting-started/quickstart
     - theme: alt
       text: View on GitHub
       link: https://github.com/Azure-Samples/foundry-azure-local-chat

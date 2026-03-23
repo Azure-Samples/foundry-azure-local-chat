@@ -147,7 +147,3 @@ azd env set DEPLOY_SCOPE "frontend"
 azd env set VITE_API_URL "https://your-backend.com/api"
 azd up
 ```
-
----
-
-*Last updated: 2026-02-24*

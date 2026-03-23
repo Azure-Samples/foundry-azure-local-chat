@@ -167,18 +167,7 @@ Both sides communicate through the [API contract](/1-getting-started/architectur
 
 ## Implementing a Custom Backend
 
-Your server must implement the [API contract](/1-getting-started/architecture.md#api-contract). The services expect:
-
-| Endpoint                       | Method | Used By                               |
-| ------------------------------ | ------ | ------------------------------------- |
-| `/api/responses`               | POST   | `sendMessage`, `sendMessageStreaming` |
-| `/api/conversations`           | GET    | `fetchConversations`                  |
-| `/api/conversations/:id`       | GET    | `fetchConversation`                   |
-| `/api/conversations/:id`       | PATCH  | `renameConversation`                  |
-| `/api/conversations/:id`       | DELETE | `deleteConversation`                  |
-| `/api/conversations/:id/items` | GET    | `fetchMessages`                       |
-
-The base URL is configured via `VITE_API_URL` environment variable (defaults to `/api` for proxy setups).
+Your server must implement the [API contract](/1-getting-started/architecture.md#api-contract). The base URL is configured via `VITE_API_URL` environment variable (defaults to `/api` for proxy setups).
 
 You can also implement the `DataProvider` interface directly if using the reference server - add your provider alongside `ApiProvider` and `MockProvider`, then update `getProvider()` to return it.
 

@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 2
 ---
 
 # Custom Providers Guide
@@ -38,17 +38,7 @@ The application is split into two independently pluggable layers:
 
 Use this approach when you want to replace the included Express server entirely and point the chat UI at your own backend.
 
-The UI never calls the server directly — it communicates through a **service interface** defined in `src/types/chat.types.ts`. Your server just needs to implement the expected HTTP endpoints:
-
-| Endpoint                       | Method | Purpose                           |
-| ------------------------------ | ------ | --------------------------------- |
-| `/api/responses`               | POST   | Send a message and get a response |
-| `/api/conversations`           | GET    | List all conversations            |
-| `/api/conversations/:id`       | GET    | Get a single conversation         |
-| `/api/conversations/:id`       | PATCH  | Rename a conversation             |
-| `/api/conversations/:id`       | DELETE | Delete a conversation             |
-| `/api/conversations/:id/items` | GET    | Get paginated messages            |
-| `/api/settings`                | GET    | Return `{ streaming: boolean }`   |
+The UI never calls the server directly — it communicates through a **service interface** defined in `src/types/chat.types.ts`. Your server just needs to implement the [API contract](/1-getting-started/architecture.md#api-contract).
 
 Point the UI at your server by setting the `VITE_API_URL` environment variable:
 

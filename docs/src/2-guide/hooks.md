@@ -24,7 +24,7 @@ Foundry Azure Local Chat provides custom hooks for chat state management, UI beh
 
 ## useChatConversation
 
-The main hook for chat functionality. Returns all state and handlers needed by the Chat component. Loaded dynamically via the [chat API factory](/2-features/services.md#chat-api-factory) based on server settings.
+The main hook for chat functionality. Returns all state and handlers needed by the Chat component. Loaded dynamically via the [chat API factory](/2-guide/services.md#chat-api-factory) based on server settings.
 
 ```typescript
 import { useChatConversation } from '@/hooks/internals/_useStandardChatConversation';
@@ -61,7 +61,7 @@ Returns `{ state: ChatConversationState; handlers: ChatConversationHandlers }` -
 
 ### Internal Architecture
 
-The hook is never imported directly — it is **loaded dynamically** by the [chat API factory](/2-features/services.md#chat-api-factory). At startup, the factory calls `/api/settings` to check whether streaming is enabled, then returns the matching hook and API service:
+The hook is never imported directly — it is **loaded dynamically** by the [chat API factory](/2-guide/services.md#chat-api-factory). At startup, the factory calls `/api/settings` to check whether streaming is enabled, then returns the matching hook and API service:
 
 ```
 chatApiFactory()
@@ -139,4 +139,4 @@ const { mode, isDark, theme, setMode } = useTheme();
 2. localStorage: `app-theme` key
 3. System preference: `prefers-color-scheme`
 
-See [configuration.md](/2-features/configuration.md) for `storage.theme` and `query.theme` config keys.
+See [configuration.md](/2-guide/configuration.md) for `storage.theme` and `query.theme` config keys.

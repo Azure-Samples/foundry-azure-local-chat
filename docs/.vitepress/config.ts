@@ -22,7 +22,7 @@ export default withMermaid(defineConfig({
   themeConfig: {
     nav: [
       { text: "Home", link: "/" },
-      { text: "Getting Started", link: "/1-getting-started/getting-started" },
+      { text: "Getting Started", link: "/1-getting-started/quickstart" },
     ],
     sidebar: generateSidebar({
       documentRootPath: "src",

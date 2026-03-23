@@ -80,7 +80,7 @@ When `"chat.useRoutes": false`:
 
 ## API Requirements
 
-Your backend must implement the [API contract](/1-getting-started/architecture.md#api-contract). See [services.md](/2-features/services.md#implementing-a-custom-backend) for endpoint details and custom backend implementation examples.
+Your backend must implement the [API contract](/1-getting-started/architecture.md#api-contract). See [services.md](/2-guide/services.md#implementing-a-custom-backend) for endpoint details and custom backend implementation examples.
 
 ## Backend Requirements
 
@@ -94,7 +94,7 @@ AI_AGENT_ID=your-agent-name:version
 DATASOURCES=api
 ```
 
-See [Server Setup](/server/README.md) for full configuration, or [Cookbooks](/3-development/cookbooks) for Azure deployment recipes.
+See [Server Setup](/server/README.md) for full configuration, or the [Deployment Guide](/3-deployment/deploy.md) for Azure deployment recipes.
 
 ## Usage Examples
 

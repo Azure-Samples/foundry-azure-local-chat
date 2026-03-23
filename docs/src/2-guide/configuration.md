@@ -192,8 +192,4 @@ AI_AGENT_ID=your-agent-name:version
 # Authentication: uses DefaultAzureCredential (Workload Identity in production, az login locally)
 ```
 
-See [getting-started.md](../1-getting-started/getting-started.md) for full environment setup.
-
----
-
-*Last updated: 2026-02-24*
+See [quickstart.md](../1-getting-started/quickstart.md) for full environment setup.

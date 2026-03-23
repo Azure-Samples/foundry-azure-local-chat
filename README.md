@@ -30,7 +30,7 @@ This project framework provides the following features:
   * Add a custom AI provider — implement the server-side provider interface to connect any API (e.g., Chat Completions, Agents, or your own)
   * Swap the frontend API layer — switch the UI to a different backend with no component changes
 
-  See the [Custom Providers Guide](docs/src/3-development/custom-providers.md) for details.
+  See the [Quick Start Guide](docs/src/1-getting-started/quickstart.md) for details.
 
 ### Architecture Diagram
 
@@ -226,10 +226,10 @@ You can estimate the cost of this project's architecture with [Azure's pricing c
 
 This template has [Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) built in to eliminate the need for developers to manage credentials. Applications can use managed identities to obtain Microsoft Entra tokens without having to manage any credentials. Additionally, we have added a [GitHub Action tool](https://github.com/microsoft/security-devops-action) that scans the infrastructure-as-code files and generates a report containing any detected issues. To ensure best practices in your repo we recommend anyone creating solutions based on our templates ensure that the [Github secret scanning](https://docs.github.com/code-security/secret-scanning/about-secret-scanning) setting is enabled in your repos.
 
-## Resources (TODO)
+## Resources
 
-* [Getting Started Guide](docs/src/1-getting-started/getting-started.md)
-* [Features Documentation](docs/src/2-features/)
-* [Development & Deployment](docs/src/3-development/)
-* [Custom Providers Guide](docs/src/3-development/custom-providers.md)
+* [Getting Started Guide](docs/src/1-getting-started/quickstart.md)
+* [Guide Documentation](docs/src/2-guide/)
+* [Deployment](docs/src/3-deployment/)
+* [Custom Providers Guide](docs/src/3-deployment/custom-providers.md)
 * [Microsoft Foundry documentation](https://learn.microsoft.com/azure/ai-studio/)

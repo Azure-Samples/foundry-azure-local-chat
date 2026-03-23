@@ -292,4 +292,4 @@ npm run lint:fix      # Auto-fix ESLint errors
 
 ## Azure Deployment
 
-See [deployment guide](../docs/src/3-development/deployment.md) for deploying to Azure via `azd`.
+See [deployment guide](../docs/src/3-deployment/deploy.md) for deploying to Azure via `azd`.

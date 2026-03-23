@@ -138,5 +138,3 @@ getText('greeting', 'John', 'Foundry Azure Local Chat')
 3. **Keep strings short** - Long text should be in docs, not UI
 4. **Test with long strings** - Some languages expand text by 30%+
 
----
-*Last updated: 2026-02-10*

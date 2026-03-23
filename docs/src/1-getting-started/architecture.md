@@ -66,7 +66,7 @@ flowchart LR
     style D fill:#0366d6,color:#fff
 ```
 
-The factory auto-detects the server mode via `GET /api/settings` and lazy-loads the matching implementation. See [services.md](/2-features/services.md) for API details.
+The factory auto-detects the server mode via `GET /api/settings` and lazy-loads the matching implementation. See [services.md](/2-guide/services.md) for API details.
 
 ### Server-Side Providers
 
@@ -82,7 +82,7 @@ flowchart LR
     style D fill:#b08800,color:#fff
 ```
 
-Routes call `getProvider()` based on the `DATASOURCES` env var. See [services.md](/2-features/services.md#server-side-dataprovider) for implementation details.
+Routes call `getProvider()` based on the `DATASOURCES` env var. See [services.md](/2-guide/services.md#server-side-dataprovider) for implementation details.
 
 ## Atomic Pattern (Responses API)
 
@@ -114,7 +114,7 @@ Your server must implement these endpoints:
 | DELETE | `/api/conversations/:id`       | Delete conversation                      |
 | GET    | `/api/conversations/:id/items` | List messages (paginated)                |
 
-All types come from the `openai` npm package - see [types.md](/2-features/types.md) for type definitions and [services.md](/2-features/services.md) for request/response examples and custom backend implementation.
+All types come from the `openai` npm package — see [types.md](/2-guide/types.md) for type definitions and [services.md](/2-guide/services.md) for request/response examples and custom backend implementation.
 
 ## Component Architecture
 
@@ -131,20 +131,6 @@ flowchart LR
     style E fill:#0366d6,color:#fff
 ```
 
-Services are instantiated via factory, consumed by [hooks](/2-features/hooks.md), and passed as props to [components](/2-features/chat-component.md). Configuration happens at the page/hook level - the Chat component is pure presentation.
+Services are instantiated via factory, consumed by [hooks](/2-guide/hooks.md), and passed as props to [components](/2-guide/chat-component.md). Configuration happens at the page/hook level — the Chat component is pure presentation.
 
-## Environment Configuration
-
-```sh
-# Frontend .env (build-time)
-VITE_API_URL=https://your-server.com       # Production API URL
-VITE_API_MODE=agents                       # "agents" or "responses"
-
-# Server .env
-DATASOURCES=api                            # "api" or "mock"
-STREAMING=enabled                          # "enabled" or "disabled"
-```
-
-## Reference Server
-
-An Express server is included in `server/`. See [server/README.md](../server/README.md) for setup. This is optional - implement the [API contract](#api-contract) above with any backend.
+See [configuration.md](/2-guide/configuration.md) for all frontend and server environment variables.
