@@ -1,0 +1,52 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
+# Validates the repository against AI Gallery template Definition of Done (DoD) requirements
+# using the microsoft/template-validation-action.
+#
+# Prerequisites:
+#   Run `azd pipeline config` to configure the GitHub repository with the required
+#   variables, secrets, and federated credentials for OIDC authentication.
+
+name: Template Validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+jobs:
+  template_validation_job:
+    runs-on: ubuntu-latest
+    name: template validation
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: microsoft/template-validation-action@v0.3.2
+        id: validation
+        env:
+          TEMPLATE_VALIDATION_MODE: true
+          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Infrastructure sizing — AKS cluster configuration
+          NODE_COUNT: ${{ vars.NODE_COUNT }}
+          VM_SIZE: ${{ vars.VM_SIZE }}
+          # Deployment scope
+          DEPLOY_SCOPE: ${{ vars.DEPLOY_SCOPE }}
+          # AI configuration — MS Foundry integration mode
+          AI_MODE: ${{ vars.AI_MODE }}
+          AI_MODEL_NAME: ${{ vars.AI_MODEL_NAME }}
+          AI_MODEL_VERSION: ${{ vars.AI_MODEL_VERSION }}
+          AI_MODEL_CAPACITY: ${{ vars.AI_MODEL_CAPACITY }}
+          AI_PROJECT_ENDPOINT: ${{ vars.AI_PROJECT_ENDPOINT }}
+          AI_AGENT_ID: ${{ vars.AI_AGENT_ID }}
+
+      - name: print result
+        run: cat ${{ steps.validation.outputs.resultFile }}
