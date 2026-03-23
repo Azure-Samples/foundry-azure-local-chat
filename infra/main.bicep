@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 // ============================================================
-// Edge-Core-Chat — Main Bicep Orchestrator
+// foundry-azure-local-chat — Main Bicep Orchestrator
 // ============================================================
 // Creates Azure resources for K8s deployment.
 // Arc connection and K8s resources are handled by hooks.
@@ -31,10 +31,10 @@ param nodeCount int = 2
 @description('AKS VM size (recommended: Standard_D2s_v3 for dev, D4s_v3 for prod)')
 param vmSize string = 'Standard_D2s_v3'
 
-@description('AI Foundry endpoint (optional — leave empty for mock mode). Also injected into the pod at deploy time.')
+@description('MS Foundry endpoint (optional — leave empty for mock mode). Also injected into the pod at deploy time.')
 param aiProjectEndpoint string = ''
 
-@description('AI mode: "byo" = bring your own, "create" = provision AI Foundry, "mock" = no AI')
+@description('AI mode: "byo" = bring your own, "create" = provision MS Foundry, "mock" = no AI')
 @allowed(['byo', 'create', 'mock'])
 param aiMode string = 'byo'
 
@@ -95,7 +95,7 @@ module identity './modules/identity.bicep' = if (needsBackend) {
   }
 }
 
-// AI Foundry resources — only when aiMode=create
+// MS Foundry resources — only when aiMode=create
 module aiFoundry './modules/ai-foundry.bicep' = if (createAI) {
   name: 'aiFoundry'
   scope: rg
@@ -112,7 +112,7 @@ module aiFoundry './modules/ai-foundry.bicep' = if (createAI) {
 // to avoid RoleAssignmentExists errors on re-deploy.
 
 // ─── Cross-RG RBAC (BYO mode only) ──────────────────────────
-// When aiMode=byo, cross-RG role assignments for AI Foundry are
+// When aiMode=byo, cross-RG role assignments for MS Foundry are
 // handled in the postprovision hook (via az CLI) to avoid azd down
 // tracking the external AI resource group.
 // When aiMode=create, RBAC is handled inline by ai-foundry.bicep.

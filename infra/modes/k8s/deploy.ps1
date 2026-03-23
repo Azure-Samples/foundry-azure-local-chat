@@ -248,12 +248,12 @@ azd env set PREV_DEPLOY_SCOPE $SCOPE 2>$null
 # Save config to RG tags
 $RESOURCE_GROUP = $script:RES_RESOURCE_GROUP
 az group update --name $RESOURCE_GROUP --tags `
-    "edge-chat-deploy-done=true" `
-    "edge-chat-recipe=$($env:RECIPE)" `
-    "edge-chat-scope=${SCOPE}" `
-    "edge-chat-datasources=$($env:DATASOURCES)" `
-    "edge-chat-streaming=$($env:STREAMING)" `
-    "edge-chat-cors=$($env:CORS_ORIGINS)" `
-    "edge-chat-admin=$($env:ENABLE_ADMIN_ROUTES)" `
-    "edge-chat-agent-id=$($env:AI_AGENT_ID)" `
+    "foundry-chat-deploy-done=true" `
+    "foundry-chat-recipe=$($env:RECIPE)" `
+    "foundry-chat-scope=${SCOPE}" `
+    "foundry-chat-datasources=$($env:DATASOURCES)" `
+    "foundry-chat-streaming=$($env:STREAMING)" `
+    "foundry-chat-cors=$($env:CORS_ORIGINS)" `
+    "foundry-chat-admin=$($env:ENABLE_ADMIN_ROUTES)" `
+    "foundry-chat-agent-id=$($env:AI_AGENT_ID)" `
     --output none 2>$null

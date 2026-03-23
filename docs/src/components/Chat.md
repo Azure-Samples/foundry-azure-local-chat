@@ -79,4 +79,4 @@ Internally renders: [ChatMessageItem](/components/ChatMessage), [InputArea](/com
 
 Note: [ChatHistory](/components/ChatHistory) is now a sibling component rendered by ChatPage, not a child of Chat.
 
-See [Chat Component feature guide](/2-features/chat-component) for detailed behavior.
+See [Chat Component feature guide](/2-guide/chat-component) for detailed behavior.

@@ -97,7 +97,3 @@ See [configuration.md](./configuration.md) for all options.
 ## Sub-Components
 
 See the [Components](/components/) section for individual component documentation, and [architecture.md](/1-getting-started/architecture.md#component-architecture) for how Chat fits into the overall component hierarchy.
-
----
-
-_Last updated: 2026-02-24_

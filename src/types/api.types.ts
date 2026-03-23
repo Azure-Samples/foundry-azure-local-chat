@@ -3,11 +3,11 @@
 /**
  * API Types
  *
- * Azure AI Foundry uses an OpenAI-compatible client for conversations/responses.
+ * Microsoft Foundry uses an OpenAI-compatible client for conversations/responses.
  * We re-export the types we need from the OpenAI SDK.
  *
  * Architecture:
- * - Azure AI Foundry's `AIProjectClient.getOpenAIClient()` returns an OpenAI client
+ * - Microsoft Foundry's `AIProjectClient.getOpenAIClient()` returns an OpenAI client
  * - Therefore, conversation/response types come from OpenAI SDK
  * - This is the SINGLE source of truth for API types (used by both client and server)
  */

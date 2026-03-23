@@ -234,7 +234,7 @@ for scope in "${SCOPES[@]}"; do
         [ "$ai" = "create" ] && set_test_val "AI_MODEL_NAME" "gpt-4o-mini"
         [ "$ai" = "create" ] && set_test_val "AI_MODEL_VERSION" "2024-07-18"
         [ "$ai" = "create" ] && set_test_val "AI_MODEL_CAPACITY" "1"
-        [ "$ai" = "create" ] && set_test_val "AI_AGENT_ID" "edge-chat-agent:1"
+        [ "$ai" = "create" ] && set_test_val "AI_AGENT_ID" "foundry-chat-agent:1"
 
         result=$(test_config_valid "$scope" "$ai")
         if [ -z "$result" ]; then
@@ -347,7 +347,7 @@ for recipe in "all" "dev"; do
     # Validate the recipe produces valid config
     scope=$(get_test_val "DEPLOY_SCOPE")
     ai=$(get_test_val "AI_MODE")
-    [ "$ai" = "create" ] && set_test_val "AI_MODEL_NAME" "gpt-4o-mini" && set_test_val "AI_AGENT_ID" "edge-chat-agent:1"
+    [ "$ai" = "create" ] && set_test_val "AI_MODEL_NAME" "gpt-4o-mini" && set_test_val "AI_AGENT_ID" "foundry-chat-agent:1"
 
     result=$(test_config_valid "$scope" "$ai")
     if [ -z "$result" ]; then
@@ -379,7 +379,7 @@ for trans in "${AI_TRANSITIONS[@]}"; do
     [ "$to" = "byo" ] && set_test_val "AI_PROJECT_ENDPOINT" "https://hub.cognitiveservices.azure.com/api/projects/proj"
     [ "$to" = "byo" ] && set_test_val "AI_AGENT_ID" "my-agent:1"
     [ "$to" = "create" ] && set_test_val "AI_MODEL_NAME" "gpt-4o-mini"
-    [ "$to" = "create" ] && set_test_val "AI_AGENT_ID" "edge-chat-agent:1"
+    [ "$to" = "create" ] && set_test_val "AI_AGENT_ID" "foundry-chat-agent:1"
 
     needs_cleanup=""
     [ "$from" = "create" ] && [ "$to" != "create" ] && needs_cleanup="yes"

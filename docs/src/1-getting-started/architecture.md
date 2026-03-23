@@ -9,7 +9,7 @@ order: 2
 ```mermaid
 flowchart LR
     A["React App<br/>(Frontend)"] -->|Responses API| B["Your Server<br/>(Backend)"]
-    B -->|Workload Identity| C["Azure AI Foundry<br/>or OpenAI, etc."]
+    B -->|Workload Identity| C["Microsoft Foundry<br/>or OpenAI, etc."]
 
     style A fill:#0366d6,color:#fff
     style B fill:#0d6e3e,color:#fff
@@ -22,7 +22,7 @@ The frontend connects to **any backend** implementing the OpenAI Conversations A
 
 <LiteTree>
 ---
-- Edge-Core-Chat/
+- foundry-azure-local-chat/
     + src/                          // Frontend React app
         components/
         config/                    // App constants + runtime env override
@@ -66,7 +66,7 @@ flowchart LR
     style D fill:#0366d6,color:#fff
 ```
 
-The factory auto-detects the server mode via `GET /api/settings` and lazy-loads the matching implementation. See [services.md](/2-features/services.md) for API details.
+The factory auto-detects the server mode via `GET /api/settings` and lazy-loads the matching implementation. See [services.md](/2-guide/services.md) for API details.
 
 ### Server-Side Providers
 
@@ -75,14 +75,14 @@ The reference server uses a `DataProvider` interface to abstract data sources:
 ```mermaid
 flowchart LR
     A["Express Routes"] --> B["getProvider()"]
-    B --> C["ApiProvider<br/>(Azure AI Foundry)"]
+    B --> C["ApiProvider<br/>(Microsoft Foundry)"]
     B --> D["MockProvider<br/>(in-memory)"]
 
     style C fill:#0d6e3e,color:#fff
     style D fill:#b08800,color:#fff
 ```
 
-Routes call `getProvider()` based on the `DATASOURCES` env var. See [services.md](/2-features/services.md#server-side-dataprovider) for implementation details.
+Routes call `getProvider()` based on the `DATASOURCES` env var. See [services.md](/2-guide/services.md#server-side-dataprovider) for implementation details.
 
 ## Atomic Pattern (Responses API)
 
@@ -114,7 +114,7 @@ Your server must implement these endpoints:
 | DELETE | `/api/conversations/:id`       | Delete conversation                      |
 | GET    | `/api/conversations/:id/items` | List messages (paginated)                |
 
-All types come from the `openai` npm package - see [types.md](/2-features/types.md) for type definitions and [services.md](/2-features/services.md) for request/response examples and custom backend implementation.
+All types come from the `openai` npm package — see [types.md](/2-guide/types.md) for type definitions and [services.md](/2-guide/services.md) for request/response examples and custom backend implementation.
 
 ## Component Architecture
 
@@ -131,57 +131,6 @@ flowchart LR
     style E fill:#0366d6,color:#fff
 ```
 
-Services are instantiated via factory, consumed by [hooks](/2-features/hooks.md), and passed as props to [components](/2-features/chat-component.md). Configuration happens at the page/hook level - the Chat component is pure presentation.
+Services are instantiated via factory, consumed by [hooks](/2-guide/hooks.md), and passed as props to [components](/2-guide/chat-component.md). Configuration happens at the page/hook level — the Chat component is pure presentation.
 
-## Environment Configuration
-
-```sh
-# Frontend .env (build-time)
-VITE_API_URL=https://your-server.com       # Production API URL
-VITE_API_MODE=agents                       # "agents" or "responses"
-
-# Server .env
-DATASOURCES=api                            # "api" or "mock"
-STREAMING=enabled                          # "enabled" or "disabled"
-```
-
-### Runtime Config (Docker/Helm)
-
-When deployed as a Docker container, all `VITE_*` variables can be injected at runtime via environment variables -- no rebuild needed. The `docker-entrypoint.sh` script writes them to `config.js` before nginx starts.
-
-```
-Helm values → K8s ConfigMap → Pod env vars → docker-entrypoint.sh → config.js → Browser
-```
-
-The frontend reads config via `env()` from `src/config/runtime.ts`:
-
-```ts
-import { env } from "@/config/runtime";
-const apiUrl = env("VITE_API_URL", "/api");
-```
-
-Fallback order: runtime config (Docker) → build-time `VITE_*` → default value.
-
-See [Docker Runtime Configuration](/3-development/deployment.md#docker-runtime-configuration) for the full variable reference.
-
-Toggle between mock and API at runtime (development only - disabled in production unless `ENABLE_ADMIN_ROUTES=true`):
-
-```bash
-curl -X POST http://localhost:3001/api/admin/datasource/toggle
-```
-
-## Reference Server
-
-An Express server is included in `server/`. See [server/README.md](../server/README.md) for setup. This is optional - implement the [API contract](#api-contract) above with any backend.
-
-## Patches
-
-Fluent Copilot component fixes via `patch-package`:
-
-- ChatInput overflow and button positioning
-
-Applied automatically on `npm install`.
-
----
-
-_Last updated: 2026-02-24_
+See [configuration.md](/2-guide/configuration.md) for all frontend and server environment variables.

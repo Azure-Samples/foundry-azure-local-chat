@@ -51,7 +51,7 @@ if ($NEEDS_BACKEND -and $AI_MODE -eq "create") {
     $AI_ENDPOINT = $env:AI_FOUNDRY_ENDPOINT
     if ($AI_ENDPOINT) {
         Write-Host ""
-        Write-Host "`u{1F916} AI Mode: create `u{2014} AI Foundry resources provisioned"
+        Write-Host "`u{1F916} AI Mode: create `u{2014} MS Foundry resources provisioned"
 
         azd env set AI_PROJECT_ENDPOINT "$AI_ENDPOINT" 2>$null
         azd env set DATASOURCES "api" 2>$null
@@ -135,7 +135,7 @@ if ($NEEDS_BACKEND -and $PRINCIPAL_ID -and $env:AZURE_SUBSCRIPTION_ID -and $AI_M
 $CLEANUP_AI = $env:CLEANUP_AI
 if ($CLEANUP_AI -eq "delete") {
     Write-Host ""
-    Write-Host "`u{1F5D1}`u{FE0F}  Deleting AI Foundry resources..."
+    Write-Host "`u{1F5D1}`u{FE0F}  Deleting MS Foundry resources..."
     $AI_HUB_NAME = "$($env:ARC_PREFIX)-ai-hub"
     az cognitiveservices account delete `
         --name "$AI_HUB_NAME" `

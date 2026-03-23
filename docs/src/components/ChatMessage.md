@@ -6,9 +6,13 @@ order: 2
 
 Renders individual user or assistant messages with markdown support.
 
+> **Source:** `src/components/ChatMessage/ChatMessage.tsx` — exported as `ChatMessageItem`.
+
 ## Usage
 
 ```tsx
+import { ChatMessageItem } from '@/components/ChatMessage/ChatMessage';
+
 <ChatMessageItem
   message={msg}
   avatar={avatarIcon}

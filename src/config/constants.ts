@@ -33,9 +33,9 @@ const DEFAULTS: TypedConfigOptions = {
   "query.theme": "theme",
 
   // App info
-  "app.name": "Edge AI Chat",
+  "app.name": "Foundry Azure Local Chat",
   "app.version": "1.0.0",
-  "app.title": "Edge AI Chat",
+  "app.title": "Foundry Azure Local Chat",
   "app.favicon": "/favicon.ico",
 
   // Copilot settings

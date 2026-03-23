@@ -2,7 +2,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-# Show current server settings for Edge-Core-Chat
+# Show current server settings for foundry-azure-local-chat
 
 set -e
 

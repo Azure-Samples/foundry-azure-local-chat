@@ -4,7 +4,7 @@ order: 3
 
 # Configuration
 
-Edge Core Chat uses a type-safe configuration system with full autocomplete support.
+Foundry Azure Local Chat uses a type-safe configuration system with full autocomplete support.
 
 ## Overview
 
@@ -81,9 +81,9 @@ config.isNotEmpty("chat.maxLength")
 
 | Key           | Type   | Default            | Description                       |
 | ------------- | ------ | ------------------ | --------------------------------- |
-| `app.name`    | string | `"Edge AI Chat"`   | Application display name          |
+| `app.name`    | string | `"Foundry Azure Local Chat"`   | Application display name          |
 | `app.version` | string | `"1.0.0"`          | Application version number        |
-| `app.title`   | string | `"Edge AI Chat"`   | Page title (shown in browser tab) |
+| `app.title`   | string | `"Foundry Azure Local Chat"`   | Page title (shown in browser tab) |
 | `app.favicon` | string | `"/favicon.ico"`   | Path to favicon file              |
 
 ### Storage Keys
@@ -185,15 +185,11 @@ DATASOURCES=api
 # Streaming: "enabled" or "disabled"
 STREAMING=enabled
 
-# Azure AI Foundry (required when DATASOURCES=api)
+# Microsoft Foundry (required when DATASOURCES=api)
 AI_PROJECT_ENDPOINT=https://your-project.services.ai.azure.com/api/projects/your-project
 AI_AGENT_ID=your-agent-name:version
 
 # Authentication: uses DefaultAzureCredential (Workload Identity in production, az login locally)
 ```
 
-See [getting-started.md](../1-getting-started/getting-started.md) for full environment setup.
-
----
-
-*Last updated: 2026-02-24*
+See [quickstart.md](../1-getting-started/quickstart.md) for full environment setup.

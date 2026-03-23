@@ -4,7 +4,7 @@
  * Chat Types
  *
  * Types for the chat UI layer. Uses OpenAI types directly where possible
- * since Azure AI Foundry wraps an OpenAI-compatible client.
+ * since Microsoft Foundry wraps an OpenAI-compatible client.
  *
  * Type strategy:
  * - ChatMessage = OpenAI Message (no wrapper)

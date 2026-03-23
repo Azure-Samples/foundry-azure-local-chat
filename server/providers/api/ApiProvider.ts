@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 /**
- * API Provider - Azure AI Foundry implementation of DataProvider
+ * API Provider - Microsoft Foundry implementation of DataProvider
  *
  * Wraps the OpenAI SDK client and session tracking.
  */

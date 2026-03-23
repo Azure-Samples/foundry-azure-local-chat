@@ -107,7 +107,7 @@ class StreamingChatApiService extends ChatApiService implements StreamingChatApi
               continue;
             }
 
-            // Handle Azure AI Foundry response stream events
+            // Handle Microsoft Foundry response stream events
             switch (event.type) {
               // Text content delta - the actual streaming text chunks
               case "response.output_text.delta":

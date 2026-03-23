@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 /**
- * Edge Core Chat Server
+ * Foundry Azure Local Chat Server
  *
- * Reference implementation for Azure AI Foundry integration.
+ * Reference implementation for Microsoft Foundry integration.
  * See /server/routes for API endpoints.
  */
 

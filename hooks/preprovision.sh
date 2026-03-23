@@ -153,7 +153,7 @@ wizard_infrastructure() {
             if [ -n "$AI_INFO" ] && [ "$AI_INFO" != "" ]; then
                 save_val "AI_MODE" "create"
                 save_val "PREV_AI_MODE" "create"
-                echo -e "  ${GREEN}✓ AI Foundry hub:${NC} ${AI_HUB_NAME}"
+                echo -e "  ${GREEN}✓ MS Foundry hub:${NC} ${AI_HUB_NAME}"
 
                 # Detect model deployment
                 local DEPLOY_TSV
@@ -322,13 +322,13 @@ wizard_scope() {
 wizard_ai() {
     [ "$(get_val "DEPLOY_SCOPE")" = "frontend" ] && return
 
-    section "③ AI Configuration" "How to connect to Azure AI Foundry for the chat backend."
+    section "③ AI Configuration" "How to connect to Microsoft Foundry for the chat backend."
 
     local PREV_AI; PREV_AI=$(get_val "PREV_AI_MODE")
 
     prompt_choice "AI_MODE" "AI backend" \
-        "create|Create new — provision AI Foundry hub, project, and model" \
-        "byo|Bring your own — use an existing AI Foundry project and agent" \
+        "create|Create new — provision MS Foundry hub, project, and model" \
+        "byo|Bring your own — use an existing MS Foundry project and agent" \
         "mock|Mock mode — no AI, use dummy responses for testing"
 
     local MODE; MODE=$(get_val "AI_MODE")
@@ -336,7 +336,7 @@ wizard_ai() {
     # Detect AI mode downgrade — offer to clean up provisioned resources
     if [ "$AUTO_YES" != "true" ] && [ "$PREV_AI" = "create" ] && [ "$MODE" != "create" ]; then
         echo ""
-        echo -e "  ${YELLOW}⚠ You previously provisioned AI Foundry resources (hub, project, model).${NC}"
+        echo -e "  ${YELLOW}⚠ You previously provisioned MS Foundry resources (hub, project, model).${NC}"
         echo -e "  ${DIM}These may still incur charges from the model deployment TPM allocation.${NC}"
         echo ""
         prompt_choice "CLEANUP_AI" "What to do with existing AI resources?" \
@@ -356,11 +356,11 @@ wizard_ai() {
 }
 
 # ═══════════════════════════════════════════════════════════════════════════
-# Wizard Step ③a — AI Create (provision new AI Foundry hub + model)
+# Wizard Step ③a — AI Create (provision new MS Foundry hub + model)
 # ═══════════════════════════════════════════════════════════════════════════
 
 wizard_ai_create() {
-    echo -e "  ${DIM}We'll create an AI Foundry hub + project and deploy a model.${NC}"
+    echo -e "  ${DIM}We'll create an MS Foundry hub + project and deploy a model.${NC}"
     echo -e "  ${DIM}An agent will be created automatically after provisioning.${NC}"
     echo ""
 
@@ -392,7 +392,7 @@ wizard_ai_create() {
     POP_M_V+=("__more__" "__custom__")
     POP_M_D+=("${BOLD}More models...${NC} ${DIM}— all models (DeepSeek, Phi, Llama, etc.)${NC}" "${BOLD}Custom...${NC} ${DIM}— type a model name manually${NC}")
 
-    echo -e "  ${DIM}Which model to deploy in your AI Foundry project.${NC}"
+    echo -e "  ${DIM}Which model to deploy in your MS Foundry project.${NC}"
     while true; do
         prompt_select "AI_MODEL_NAME" "Model to deploy" POP_M_V POP_M_D \
             "" "gpt-4o-mini"
@@ -453,7 +453,7 @@ wizard_ai_create() {
         echo -e "  ${DIM}Model version:${NC} ${CYAN}${CUR_VER}${NC}"
     else
         prompt_val "AI_MODEL_VERSION" "Model version" "2024-07-18" --required \
-            "Model version — check Azure AI Foundry for available versions"
+            "Model version — check Microsoft Foundry for available versions"
     fi
 
     # ── Capacity (TPM) ────────────────────────────────────────────
@@ -479,18 +479,18 @@ wizard_ai_create() {
 }
 
 # ═══════════════════════════════════════════════════════════════════════════
-# Wizard Step ③b — AI Bring-Your-Own (existing AI Foundry project + agent)
+# Wizard Step ③b — AI Bring-Your-Own (existing MS Foundry project + agent)
 # ═══════════════════════════════════════════════════════════════════════════
 
 wizard_ai_byo() {
-    echo -e "  ${DIM}Connect to an existing AI Foundry project. We'll assign RBAC roles${NC}"
+    echo -e "  ${DIM}Connect to an existing MS Foundry project. We'll assign RBAC roles${NC}"
     echo -e "  ${DIM}so the workload identity can call the AI API (even cross-RG).${NC}"
     echo ""
 
-    prompt_val "AI_PROJECT_ENDPOINT" "AI Foundry project endpoint" "" --required \
-        "Find this in Azure Portal → AI Foundry → Project → Settings → Endpoint"
+    prompt_val "AI_PROJECT_ENDPOINT" "MS Foundry project endpoint" "" --required \
+        "Find this in Azure Portal → MS Foundry → Project → Settings → Endpoint"
     prompt_val "AI_AGENT_ID" "Agent ID (name:version)" "" --required \
-        "The agent name and version, e.g. 'my-agent:1' — find in AI Foundry → Agents"
+        "The agent name and version, e.g. 'my-agent:1' — find in MS Foundry → Agents"
 
     # Auto-detect AI_RESOURCE_GROUP from the endpoint's account name
     if [ -z "$(get_val "AI_RESOURCE_GROUP")" ]; then
@@ -506,11 +506,11 @@ wizard_ai_byo() {
             else
                 echo -e " ${YELLOW}not found in current subscription${NC}"
                 prompt_val "AI_RESOURCE_GROUP" "AI resource group" "" --required \
-                    "The resource group containing the AI Foundry account (needed for RBAC)"
+                    "The resource group containing the MS Foundry account (needed for RBAC)"
             fi
         else
             prompt_val "AI_RESOURCE_GROUP" "AI resource group" "" --required \
-                "The resource group containing the AI Foundry account (needed for RBAC)"
+                "The resource group containing the MS Foundry account (needed for RBAC)"
         fi
     fi
     save_val "DATASOURCES" "api"
@@ -652,7 +652,7 @@ apply_recipe() {
 
     case "$RECIPE" in
         all)
-            # Full-stack with AI Foundry (recommended defaults)
+            # Full-stack with MS Foundry (recommended defaults)
             save_cached "DEPLOY_SCOPE" "all"
             save_cached "AI_MODE" "create"
             save_cached "DATASOURCES" "api"
@@ -722,7 +722,7 @@ fi
 # ── Path C: Provisioned + deployed — redeploy or modify? ────────────────
 if [ "$(get_val "PROVISION_DONE")" = "true" ] && [ "$(get_val "DEPLOY_DONE")" = "true" ]; then
     echo ""
-    echo -e "  ${BOLD}${MAGENTA}🚀 Edge-Core-Chat${NC}"
+    echo -e "  ${BOLD}${MAGENTA}🚀 foundry-azure-local-chat${NC}"
     echo ""
 
     # Show current config one-liner
@@ -764,10 +764,10 @@ fi
 # ── Path D: Provisioned but not deployed — recipe or configure ──────────
 if [ "$(get_val "PROVISION_DONE")" = "true" ]; then
     echo ""
-    echo -e "  ${BOLD}${MAGENTA}🚀 Edge-Core-Chat — Configure Deployment${NC}"
+    echo -e "  ${BOLD}${MAGENTA}🚀 foundry-azure-local-chat — Configure Deployment${NC}"
     echo -e "  ${DIM}Infrastructure is ready. Choose how to deploy.${NC}"
     echo ""
-    echo -e "    ${BOLD}1)${NC} ${GREEN}all${NC} ${DIM}— Full stack + AI Foundry (gpt-4o-mini)${NC}"
+    echo -e "    ${BOLD}1)${NC} ${GREEN}all${NC} ${DIM}— Full stack + MS Foundry (gpt-4o-mini)${NC}"
     echo -e "    ${BOLD}2)${NC} ${CYAN}dev${NC} ${DIM}— Full stack + mock AI, admin enabled${NC}"
     echo -e "    ${BOLD}3)${NC} ${YELLOW}custom${NC} ${DIM}— Configure each setting manually${NC}"
     echo ""
@@ -803,11 +803,11 @@ fi
 
 # ── Path D: First run — recipe picker or full wizard ───────────────────
 echo ""
-echo -e "  ${BOLD}${MAGENTA}🚀 Edge-Core-Chat — Setup${NC}"
+echo -e "  ${BOLD}${MAGENTA}🚀 foundry-azure-local-chat — Setup${NC}"
 echo ""
 echo -e "  ${DIM}Choose a deployment recipe or configure manually.${NC}"
 echo ""
-echo -e "    ${BOLD}1)${NC} ${GREEN}all${NC} ${DIM}— Full stack + AI Foundry (gpt-4o-mini) — recommended${NC}"
+echo -e "    ${BOLD}1)${NC} ${GREEN}all${NC} ${DIM}— Full stack + MS Foundry (gpt-4o-mini) — recommended${NC}"
 echo -e "    ${BOLD}2)${NC} ${CYAN}dev${NC} ${DIM}— Full stack + mock AI, cheapest VM, admin enabled${NC}"
 echo -e "    ${BOLD}3)${NC} ${YELLOW}custom${NC} ${DIM}— Walk through the full setup wizard${NC}"
 echo ""

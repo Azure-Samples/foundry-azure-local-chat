@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 /**
- * Streaming utilities for Azure AI Foundry Responses API
+ * Streaming utilities for Microsoft Foundry Responses API
  *
  * Handles Server-Sent Events (SSE) format for streaming responses.
- * Event types follow Azure AI Foundry format:
+ * Event types follow Microsoft Foundry format:
  * - response.created: Initial response creation
  * - response.in_progress: Response is being generated
  * - response.output_text.delta: Text chunk (contains delta.text)

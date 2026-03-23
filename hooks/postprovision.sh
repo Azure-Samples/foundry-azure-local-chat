@@ -46,7 +46,7 @@ if [ "$NEEDS_BACKEND" = "true" ] && [ "$AI_MODE" = "create" ]; then
     AI_ENDPOINT="${AI_FOUNDRY_ENDPOINT:-}"
     if [ -n "$AI_ENDPOINT" ]; then
         echo ""
-        echo "🤖 AI Mode: create — AI Foundry resources provisioned"
+        echo "🤖 AI Mode: create — MS Foundry resources provisioned"
 
         azd env set AI_PROJECT_ENDPOINT "$AI_ENDPOINT" 2>/dev/null || true
         azd env set DATASOURCES "api" 2>/dev/null || true
@@ -130,7 +130,7 @@ fi
 CLEANUP_AI="${CLEANUP_AI:-}"
 if [ "$CLEANUP_AI" = "delete" ]; then
     echo ""
-    echo "🗑️  Deleting AI Foundry resources..."
+    echo "🗑️  Deleting MS Foundry resources..."
     AI_HUB_NAME="${ARC_PREFIX}-ai-hub"
     az cognitiveservices account delete \
         --name "$AI_HUB_NAME" \

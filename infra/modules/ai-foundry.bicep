@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 // ============================================================
-// AI Foundry — Hub + Project + Model Deployment
+// MS Foundry — Hub + Project + Model Deployment
 // ============================================================
 // Creates an Azure AI Services account (hub), a project under it,
 // and a model deployment. Used when AI_MODE=create.

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 /**
- * Mock streaming event generator for Azure AI Foundry format
+ * Mock streaming event generator for Microsoft Foundry format
  * Matches the ResponseStreamEvent format from OpenAI SDK
  */
 import { generateId } from "../../../utils/id";
@@ -44,7 +44,7 @@ const createMockResponse = (
 });
 
 /**
- * Generate mock streaming events that match Azure AI Foundry/OpenAI format
+ * Generate mock streaming events that match Microsoft Foundry/OpenAI format
  */
 export async function* generateMockStreamEvents(
   responseId: string,

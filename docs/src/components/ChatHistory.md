@@ -48,4 +48,4 @@ import { ChatHistory } from "@/components/ChatHistory/ChatHistory";
 "chat.enableHistory": true,  // Show/hide the sidebar entirely
 ```
 
-See [Chat History feature guide](/2-features/chat-history) for architecture and configuration details.
+See [Chat History feature guide](/2-guide/chat-history) for architecture and configuration details.

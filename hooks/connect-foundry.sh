@@ -2,7 +2,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 # ============================================================
-# Connect an existing deployment to Azure AI Foundry
+# Connect an existing deployment to Microsoft Foundry
 # ============================================================
 # Use this to switch from mock → api mode without re-provisioning.
 # Assigns RBAC roles and redeploys with API settings.
@@ -82,14 +82,14 @@ fi
 # ─── Summary ────────────────────────────────────────────────
 print_config_summary deploy "Connect Foundry"
 
-echo "  🔗 AI Foundry"
+echo "  🔗 MS Foundry"
 echo "    Endpoint:  $AI_PROJECT_ENDPOINT"
 echo "    Agent:     $AI_AGENT_ID"
 echo "    AI RG:     $AI_RESOURCE_GROUP"
 echo "    Identity:  ${PRINCIPAL_ID:0:8}..."
 echo ""
 echo "  Steps:"
-echo "    1. Assign RBAC roles on AI Foundry resource group"
+echo "    1. Assign RBAC roles on MS Foundry resource group"
 echo "    2. Set DATASOURCES=api"
 echo "    3. Redeploy backend"
 echo ""

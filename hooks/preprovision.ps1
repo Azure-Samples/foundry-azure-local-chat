@@ -147,7 +147,7 @@ function Wizard-Infrastructure {
             if ($aiInfo -and $LASTEXITCODE -eq 0) {
                 Save-Val "AI_MODE" "create"
                 Save-Val "PREV_AI_MODE" "create"
-                Write-Host "  ${GREEN}`u{2713} AI Foundry hub:${NC} ${AI_HUB_NAME}"
+                Write-Host "  ${GREEN}`u{2713} MS Foundry hub:${NC} ${AI_HUB_NAME}"
 
                 # Detect model deployment
                 $DEPLOY_TSV = az cognitiveservices account deployment list `
@@ -315,13 +315,13 @@ function Wizard-Scope {
 function Wizard-AI {
     if ((Get-Val "DEPLOY_SCOPE") -eq "frontend") { return }
 
-    Show-Section "`u{2462} AI Configuration" "How to connect to Azure AI Foundry for the chat backend."
+    Show-Section "`u{2462} AI Configuration" "How to connect to Microsoft Foundry for the chat backend."
 
     $PREV_AI = Get-Val "PREV_AI_MODE"
 
     Prompt-Choice "AI_MODE" "AI backend" `
-        "create|Create new `u{2014} provision AI Foundry hub, project, and model" `
-        "byo|Bring your own `u{2014} use an existing AI Foundry project and agent" `
+        "create|Create new `u{2014} provision MS Foundry hub, project, and model" `
+        "byo|Bring your own `u{2014} use an existing MS Foundry project and agent" `
         "mock|Mock mode `u{2014} no AI, use dummy responses for testing"
 
     $MODE = Get-Val "AI_MODE"
@@ -329,7 +329,7 @@ function Wizard-AI {
     # Detect AI mode downgrade — offer to clean up provisioned resources
     if (-not $AUTO_YES -and $PREV_AI -eq "create" -and $MODE -ne "create") {
         Write-Host ""
-        Write-Host "  ${YELLOW}`u{26A0} You previously provisioned AI Foundry resources (hub, project, model).${NC}"
+        Write-Host "  ${YELLOW}`u{26A0} You previously provisioned MS Foundry resources (hub, project, model).${NC}"
         Write-Host "  ${DIM}These may still incur charges from the model deployment TPM allocation.${NC}"
         Write-Host ""
         Prompt-Choice "CLEANUP_AI" "What to do with existing AI resources?" `
@@ -349,11 +349,11 @@ function Wizard-AI {
 }
 
 # ═══════════════════════════════════════════════════════════════════════════
-# Wizard Step 3a — AI Create (provision new AI Foundry hub + model)
+# Wizard Step 3a — AI Create (provision new MS Foundry hub + model)
 # ═══════════════════════════════════════════════════════════════════════════
 
 function Wizard-AICreate {
-    Write-Host "  ${DIM}We'll create an AI Foundry hub + project and deploy a model.${NC}"
+    Write-Host "  ${DIM}We'll create an MS Foundry hub + project and deploy a model.${NC}"
     Write-Host "  ${DIM}An agent will be created automatically after provisioning.${NC}"
     Write-Host ""
 
@@ -400,7 +400,7 @@ function Wizard-AICreate {
     $POP_M_D += "${BOLD}More models...${NC} ${DIM}`u{2014} all models (DeepSeek, Phi, Llama, etc.)${NC}"
     $POP_M_D += "${BOLD}Custom...${NC} ${DIM}`u{2014} type a model name manually${NC}"
 
-    Write-Host "  ${DIM}Which model to deploy in your AI Foundry project.${NC}"
+    Write-Host "  ${DIM}Which model to deploy in your MS Foundry project.${NC}"
     while ($true) {
         Prompt-Select "AI_MODEL_NAME" "Model to deploy" $POP_M_V $POP_M_D "" "gpt-4o-mini"
         $PICKED = Get-Val "AI_MODEL_NAME"
@@ -467,7 +467,7 @@ function Wizard-AICreate {
         Write-Host "  ${DIM}Model version:${NC} ${CYAN}${CUR_VER}${NC}"
     } else {
         Prompt-Val "AI_MODEL_VERSION" "Model version" "2024-07-18" "--required" `
-            "Model version `u{2014} check Azure AI Foundry for available versions"
+            "Model version `u{2014} check Microsoft Foundry for available versions"
     }
 
     # ── Capacity (TPM) ────────────────────────────────────────────
@@ -493,18 +493,18 @@ function Wizard-AICreate {
 }
 
 # ═══════════════════════════════════════════════════════════════════════════
-# Wizard Step 3b — AI Bring-Your-Own (existing AI Foundry project + agent)
+# Wizard Step 3b — AI Bring-Your-Own (existing MS Foundry project + agent)
 # ═══════════════════════════════════════════════════════════════════════════
 
 function Wizard-AIByo {
-    Write-Host "  ${DIM}Connect to an existing AI Foundry project. We'll assign RBAC roles${NC}"
+    Write-Host "  ${DIM}Connect to an existing MS Foundry project. We'll assign RBAC roles${NC}"
     Write-Host "  ${DIM}so the workload identity can call the AI API (even cross-RG).${NC}"
     Write-Host ""
 
-    Prompt-Val "AI_PROJECT_ENDPOINT" "AI Foundry project endpoint" "" "--required" `
-        "Find this in Azure Portal `u{2192} AI Foundry `u{2192} Project `u{2192} Settings `u{2192} Endpoint"
+    Prompt-Val "AI_PROJECT_ENDPOINT" "MS Foundry project endpoint" "" "--required" `
+        "Find this in Azure Portal `u{2192} MS Foundry `u{2192} Project `u{2192} Settings `u{2192} Endpoint"
     Prompt-Val "AI_AGENT_ID" "Agent ID (name:version)" "" "--required" `
-        "The agent name and version, e.g. 'my-agent:1' `u{2014} find in AI Foundry `u{2192} Agents"
+        "The agent name and version, e.g. 'my-agent:1' `u{2014} find in MS Foundry `u{2192} Agents"
 
     # Auto-detect AI_RESOURCE_GROUP from the endpoint's account name
     if (-not (Get-Val "AI_RESOURCE_GROUP")) {
@@ -520,11 +520,11 @@ function Wizard-AIByo {
             } else {
                 Write-Host " ${YELLOW}not found in current subscription${NC}"
                 Prompt-Val "AI_RESOURCE_GROUP" "AI resource group" "" "--required" `
-                    "The resource group containing the AI Foundry account (needed for RBAC)"
+                    "The resource group containing the MS Foundry account (needed for RBAC)"
             }
         } else {
             Prompt-Val "AI_RESOURCE_GROUP" "AI resource group" "" "--required" `
-                "The resource group containing the AI Foundry account (needed for RBAC)"
+                "The resource group containing the MS Foundry account (needed for RBAC)"
         }
     }
     Save-Val "DATASOURCES" "api"
@@ -739,7 +739,7 @@ if ($AUTO_YES) {
 # ── Path C: Provisioned + deployed — redeploy or modify? ────────────────
 if ((Get-Val "PROVISION_DONE") -eq "true" -and (Get-Val "DEPLOY_DONE") -eq "true") {
     Write-Host ""
-    Write-Host "  ${BOLD}${MAGENTA}`u{1F680} Edge-Core-Chat${NC}"
+    Write-Host "  ${BOLD}${MAGENTA}`u{1F680} foundry-azure-local-chat${NC}"
     Write-Host ""
 
     $_P = Get-Val "ARC_PREFIX"
@@ -781,10 +781,10 @@ if ((Get-Val "PROVISION_DONE") -eq "true" -and (Get-Val "DEPLOY_DONE") -eq "true
 # ── Path D: Provisioned but not deployed — recipe or configure ──────────
 if ((Get-Val "PROVISION_DONE") -eq "true") {
     Write-Host ""
-    Write-Host "  ${BOLD}${MAGENTA}`u{1F680} Edge-Core-Chat `u{2014} Configure Deployment${NC}"
+    Write-Host "  ${BOLD}${MAGENTA}`u{1F680} foundry-azure-local-chat `u{2014} Configure Deployment${NC}"
     Write-Host "  ${DIM}Infrastructure is ready. Choose how to deploy.${NC}"
     Write-Host ""
-    Write-Host "    ${BOLD}1)${NC} ${GREEN}all${NC} ${DIM}`u{2014} Full stack + AI Foundry (gpt-4o-mini)${NC}"
+    Write-Host "    ${BOLD}1)${NC} ${GREEN}all${NC} ${DIM}`u{2014} Full stack + MS Foundry (gpt-4o-mini)${NC}"
     Write-Host "    ${BOLD}2)${NC} ${CYAN}dev${NC} ${DIM}`u{2014} Full stack + mock AI, admin enabled${NC}"
     Write-Host "    ${BOLD}3)${NC} ${YELLOW}custom${NC} ${DIM}`u{2014} Configure each setting manually${NC}"
     Write-Host ""
@@ -812,11 +812,11 @@ if ((Get-Val "PROVISION_DONE") -eq "true") {
 
 # ── Path E: First run — recipe picker or full wizard ───────────────────
 Write-Host ""
-Write-Host "  ${BOLD}${MAGENTA}`u{1F680} Edge-Core-Chat `u{2014} Setup${NC}"
+Write-Host "  ${BOLD}${MAGENTA}`u{1F680} foundry-azure-local-chat `u{2014} Setup${NC}"
 Write-Host ""
 Write-Host "  ${DIM}Choose a deployment recipe or configure manually.${NC}"
 Write-Host ""
-Write-Host "    ${BOLD}1)${NC} ${GREEN}all${NC} ${DIM}`u{2014} Full stack + AI Foundry (gpt-4o-mini) `u{2014} recommended${NC}"
+Write-Host "    ${BOLD}1)${NC} ${GREEN}all${NC} ${DIM}`u{2014} Full stack + MS Foundry (gpt-4o-mini) `u{2014} recommended${NC}"
 Write-Host "    ${BOLD}2)${NC} ${CYAN}dev${NC} ${DIM}`u{2014} Full stack + mock AI, cheapest VM, admin enabled${NC}"
 Write-Host "    ${BOLD}3)${NC} ${YELLOW}custom${NC} ${DIM}`u{2014} Walk through the full setup wizard${NC}"
 Write-Host ""

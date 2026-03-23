@@ -6,7 +6,7 @@ order: 2
 
 ## Overview
 
-Edge Core Chat includes built-in conversation management with a sidebar history interface, allowing users to:
+Foundry Azure Local Chat includes built-in conversation management with a sidebar history interface, allowing users to:
 
 - Create new conversations
 - View conversation history
@@ -80,11 +80,11 @@ When `"chat.useRoutes": false`:
 
 ## API Requirements
 
-Your backend must implement the [API contract](/1-getting-started/architecture.md#api-contract). See [services.md](/2-features/services.md#implementing-a-custom-backend) for endpoint details and custom backend implementation examples.
+Your backend must implement the [API contract](/1-getting-started/architecture.md#api-contract). See [services.md](/2-guide/services.md#implementing-a-custom-backend) for endpoint details and custom backend implementation examples.
 
 ## Backend Requirements
 
-Chat history requires a backend server. The included Azure AI Foundry server (`server/`) provides a reference implementation.
+Chat history requires a backend server. The included Microsoft Foundry server (`server/`) provides a reference implementation.
 
 **Required Environment Variables** (in `server/.env`):
 
@@ -94,7 +94,7 @@ AI_AGENT_ID=your-agent-name:version
 DATASOURCES=api
 ```
 
-See [Server Setup](/server/README.md) for full configuration, or [Cookbooks](/3-development/cookbooks) for Azure deployment recipes.
+See [Server Setup](/server/README.md) for full configuration, or the [Deployment Guide](/3-deployment/deploy.md) for Azure deployment recipes.
 
 ## Usage Examples
 
@@ -246,25 +246,3 @@ See [Styling Guide](./styling.md) for theming options.
 - Verify `"chat.useRoutes": true` in `src/config/constants.ts`
 - Ensure React Router is configured with `/chat/:conversationId` route in `src/routes.tsx`
 - Navigation on conversation change is now handled internally by the hook (uses `useNavigate`)
-
-## Best Practices
-
-1. **Use atomic pattern**: Single `/api/responses` call handles everything
-2. **Server owns titles**: Don't calculate titles on client, fetch from server
-3. **Abort on navigation**: Clean up requests when users navigate away
-4. **Optimistic UI**: Show immediate feedback, sync with server in background
-5. **Error handling**: Show user-friendly errors when API calls fail
-6. **No polling**: With atomic pattern, no need to poll for status
-
-## Future Enhancements
-
-- Conversation search/filter
-- Conversation folders/categories
-- Export conversation history
-- Conversation sharing (read-only links)
-- Message editing/regeneration
-- Conversation templates
-
----
-
-_Last updated: 2026-02-24_

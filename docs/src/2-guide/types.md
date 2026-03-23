@@ -4,7 +4,7 @@ order: 8
 
 # Type System
 
-Edge Core Chat uses types from the `openai` npm package directly, ensuring compatibility with the OpenAI/Azure AI Foundry API contract.
+Foundry Azure Local Chat uses types from the `openai` npm package directly, ensuring compatibility with the OpenAI/Microsoft Foundry API contract.
 
 ## Overview
 
@@ -136,8 +136,4 @@ interface ChatConversationReturn {
 }
 ```
 
-The combined types and hook-specific types (`ChatConversationOptions`, `ChatConversationReturn`, `ChatConversationHook`) live in `src/hooks/internals/_types.ts`. See [hooks.md](/2-features/hooks.md) for hook usage and [chat-component.md](/2-features/chat-component.md) for component prop mapping.
-
----
-
-_Last updated: 2026-02-24_
+The combined types and hook-specific types (`ChatConversationOptions`, `ChatConversationReturn`, `ChatConversationHook`) live in `src/hooks/internals/_types.ts`. See [hooks.md](/2-guide/hooks.md) for hook usage and [chat-component.md](/2-guide/chat-component.md) for component prop mapping.

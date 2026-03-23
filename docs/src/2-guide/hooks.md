@@ -4,7 +4,7 @@ order: 7
 
 # Custom Hooks
 
-Edge Core Chat provides custom hooks for chat state management, UI behavior, and theming.
+Foundry Azure Local Chat provides custom hooks for chat state management, UI behavior, and theming.
 
 ## Overview
 
@@ -24,7 +24,7 @@ Edge Core Chat provides custom hooks for chat state management, UI behavior, and
 
 ## useChatConversation
 
-The main hook for chat functionality. Returns all state and handlers needed by the Chat component. Loaded dynamically via the [chat API factory](/2-features/services.md#chat-api-factory) based on server settings.
+The main hook for chat functionality. Returns all state and handlers needed by the Chat component. Loaded dynamically via the [chat API factory](/2-guide/services.md#chat-api-factory) based on server settings.
 
 ```typescript
 import { useChatConversation } from '@/hooks/internals/_useStandardChatConversation';
@@ -61,7 +61,23 @@ Returns `{ state: ChatConversationState; handlers: ChatConversationHandlers }` -
 
 ### Internal Architecture
 
-Internally uses a composition pattern: `useBaseChatConversation` provides shared state via `useReducer`, while mode-specific hooks (`useStandardChatConversation` / `useStreamingChatConversation`) inject the `sendMessageHandler`. See [architecture.md](/1-getting-started/architecture.md#pluggable-provider-pattern) for how this fits into the overall provider pattern.
+The hook is never imported directly — it is **loaded dynamically** by the [chat API factory](/2-guide/services.md#chat-api-factory). At startup, the factory calls `/api/settings` to check whether streaming is enabled, then returns the matching hook and API service:
+
+```
+chatApiFactory()
+  → GET /api/settings → { streaming: true }
+  → returns { hook: useStreamingChatConversation, api: StreamingChatApiService }
+```
+
+Internally, all conversation hooks share a **composition pattern**:
+
+1. **`_useBaseChatConversation`** — shared state via `useReducer` (messages, conversations, loading flags, pagination)
+2. **`_useStandardChatConversation`** — extends base with a synchronous `sendMessageHandler` (POST + poll)
+3. **`_useStreamingChatConversation`** — extends base with an SSE-based `sendMessageHandler` (EventSource)
+
+Each mode-specific hook calls `useBaseChatConversation(options, sendMessageHandler)`, injecting only the send logic while reusing all shared state management.
+
+See [architecture.md](/1-getting-started/architecture.md#pluggable-provider-pattern) for how this fits into the overall provider pattern.
 
 ## useAutoScroll
 
@@ -123,8 +139,4 @@ const { mode, isDark, theme, setMode } = useTheme();
 2. localStorage: `app-theme` key
 3. System preference: `prefers-color-scheme`
 
-See [configuration.md](/2-features/configuration.md) for `storage.theme` and `query.theme` config keys.
-
----
-
-_Last updated: 2026-02-24_
+See [configuration.md](/2-guide/configuration.md) for `storage.theme` and `query.theme` config keys.

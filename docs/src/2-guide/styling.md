@@ -4,7 +4,7 @@ order: 5
 
 # Styling
 
-Edge Core Chat uses Griffel (CSS-in-JS) for styling with a typed style system.
+Foundry Azure Local Chat uses Griffel (CSS-in-JS) for styling with a typed style system.
 
 ## Overview
 
@@ -71,10 +71,12 @@ const useStyles = makeStyles({
 
 ## Component Overrides
 
-Fluent AI Copilot components can be overridden via global styles:
+Fluent AI Copilot components use BEM-style class names (e.g. `.fai-ChatInput__editor`). Since these are third-party components, you cannot pass Griffel styles directly — instead, override them via global CSS selectors in `globalStyles.ts`.
+
+**When to use overrides:** Only when you need to change the layout or behavior of Fluent AI internal elements that don't expose style props.
 
 ```tsx
-// In globalStyles.ts
+// In globalStyles.ts — these are applied globally via Griffel's :global() selector
 ".fai-ChatInput__inputWrapper": {
   position: "relative",
   display: "flex",
@@ -96,6 +98,8 @@ Fluent AI Copilot components can be overridden via global styles:
 | ChatInput | `.fai-ChatInput__actions` | Send/stop buttons |
 | ChatInput | `.fai-ChatInput__status` | Character count |
 | PromptStarter | `.fui-PromptStarterV2__reasonMarker` | Category label |
+
+> **Tip:** Inspect Fluent AI components in browser DevTools to discover class names. They follow the pattern `.fai-{ComponentName}__{element}` for Fluent AI and `.fui-{ComponentName}__{element}` for Fluent UI.
 
 ## Scrollbar Styling
 
@@ -137,6 +141,3 @@ const styleGroups = {
   }),
 };
 ```
-
----
-*Last updated: 2026-02-10*
