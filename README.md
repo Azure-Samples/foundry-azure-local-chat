@@ -229,7 +229,6 @@ This template has [Managed Identity](https://learn.microsoft.com/entra/identity/
 ## Resources
 
 * [Getting Started Guide](docs/src/1-getting-started/quickstart.md)
-* [Guide Documentation](docs/src/2-guide/)
-* [Deployment](docs/src/3-deployment/)
+* [Deployment](docs/src/3-deployment/deploy.md)
 * [Custom Providers Guide](docs/src/3-deployment/custom-providers.md)
 * [Microsoft Foundry documentation](https://learn.microsoft.com/azure/ai-studio/)
