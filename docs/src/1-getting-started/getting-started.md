@@ -24,30 +24,43 @@ npm install
 
 ## Quick Start
 
-### Option 1: Mock Mode (No Backend)
+### Option 1: With Mock Server (Fastest)
 
-For UI development without a backend:
-
-```bash
-npm run dev
-```
-
-The app runs at http://localhost:5173 with mock responses enabled by default.
-
-### Option 2: With Reference Server
-
-To use the included Microsoft Foundry server:
+Run the frontend and server with mock responses — no Azure credentials needed:
 
 ```bash
-# Configure the server
+# Install server dependencies
+cd server && npm install && cd ..
+
+# Set up server config (defaults to mock mode)
 cp server/.env.example server/.env
-# Edit server/.env with your MS Foundry credentials
 
 # Terminal 1: Start frontend
 npm run dev
 
 # Terminal 2: Start server
 cd server && npm run dev
+```
+
+The app runs at http://localhost:5173 with the server returning mock AI responses on port 3001.
+
+### Option 2: With Microsoft Foundry
+
+To use the included Microsoft Foundry server:
+
+```bash
+# Configure the server
+cp server/.env.example server/.env
+# Edit server/.env:
+#   DATASOURCES=api
+#   AI_PROJECT_ENDPOINT=https://...
+#   AI_AGENT_ID=<agent>:<version>
+
+# Terminal 1: Start frontend
+npm run dev
+
+# Terminal 2: Start server
+cd server && npm run start
 ```
 
 ### Option 3: Your Own Backend
@@ -58,29 +71,13 @@ Point to your own server that implements the [API contract](./architecture.md#ap
 # .env
 VITE_API_URL=https://your-server.com
 ```
-
-## Development
-
-```bash
-npm run dev          # Frontend (Vite dev server)
-npm run build        # Production build
-npm run build:static # Build with relative paths
-npm run lint         # ESLint check
-npm run lint:fix     # ESLint auto-fix
-npm run typecheck    # TypeScript check
-```
-
-### Dev Checker Overlay
-
-ESLint and TypeScript errors are shown in the browser overlay. To disable:
-
-```bash
-VITE_DEV_CHECKER=false npm run dev
-```
+## Configurations
 
 ### Mock Mode
 
-Server-side mock is controlled via `DATASOURCES` env var in server config:
+Mock responses are provided by the **server** (not the frontend). The frontend requires a running backend — there is no client-side mock.
+
+To run the server in mock mode, set `DATASOURCES` in `server/.env`:
 
 ```sh
 # server/.env
@@ -101,9 +98,6 @@ Toggle streaming at runtime:
 ```bash
 curl -X POST http://localhost:3001/api/admin/streaming/toggle
 ```
-
-## Configuration
-
 ### Theme
 
 Set via:
@@ -112,7 +106,7 @@ Set via:
 2. localStorage: `app-theme` key
 3. System preference (fallback)
 
-### App Configuration
+### chat configuration
 
 Centralized in `src/config/constants.ts`:
 
@@ -123,7 +117,7 @@ const title = config.get("app.title");
 const maxWidth = config.get("layout.maxWidth");
 ```
 
-See [configuration.md](/2-features/configuration.md) for all options.
+See [configuration.md](../2-features/configuration.md) for all options.
 
 ### Localization
 
@@ -162,27 +156,7 @@ Available recipes:
 Run `azd up` without setting `RECIPE` to walk through the interactive wizard with arrow-key navigation. The wizard prompts for region, VM size, AI mode, deploy scope, and more.
 
 ```bash
-azd up    # no RECIPE set = wizard mode
-```
-
-### CI / Automation
-
-For non-interactive pipelines, use a recipe with `-y`:
-
-```bash
-azd env new my-chat
-azd env set RECIPE all
-azd up -- -y
-```
-
-Or set individual env vars for full control:
-
-```bash
-azd env new my-chat
-azd env set DEPLOY_MODE "k8s"
-azd env set VM_SIZE "Standard_D2s_v3"
-azd env set AI_MODE "create"
-azd up -- -y
+azd up
 ```
 
 ### Resume Existing Deployment
@@ -197,6 +171,3 @@ azd up    # auto-detects everything from Azure + K8s
 
 See [deployment.md](../3-development/deployment.md) for the full environment variable reference and deployment cookbooks.
 
----
-
-_Last updated: 2026-03-05 | Last commit: cb3b21b_

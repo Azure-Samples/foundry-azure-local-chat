@@ -187,7 +187,3 @@ You can also implement the `DataProvider` interface directly if using the refere
 - **Abort**: Calling `abort()` triggers an `AbortError` which is detected by the `isAbortError()` type guard and cleaned up automatically
 - **Network errors**: Surfaced to the UI via the hook's error handling
 - **Server errors**: The service reads `ApiErrorResponse` format and throws descriptive errors
-
----
-
-_Last updated: 2026-02-24_

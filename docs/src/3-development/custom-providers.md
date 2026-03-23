@@ -168,13 +168,14 @@ In `server/utils/datasources.ts`, extend the `DataSource` type to include your n
 export type DataSource = "mock" | "api" | "custom";
 ```
 
-Then set it via the `DATASOURCES` environment variable:
+Then set it in `server/.env`:
 
 ```bash
-DATASOURCES=custom npm run dev
+# server/.env
+DATASOURCES=custom
 ```
 
-That's it — all existing routes, streaming logic, and the chat UI will automatically use your provider.
+Restart the server and that's it — all existing routes, streaming logic, and the chat UI will automatically use your provider.
 
 ---
 

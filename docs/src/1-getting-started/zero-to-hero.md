@@ -210,7 +210,3 @@ Read the docs in this order for a complete understanding:
 - **"I want to deploy to Azure"** → #1, #2, #13
 - **"I want to bring my own backend"** → #1, #3 (API contract section), #13 (BYOB section)
 - **"I want to customize the UI"** → #1, #6, #10, #11
-
----
-
-_Last updated: 2026-03-04 | Last commit: cb3b21b_

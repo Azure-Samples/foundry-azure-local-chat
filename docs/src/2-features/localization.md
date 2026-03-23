@@ -6,13 +6,15 @@ order: 4
 
 Foundry Azure Local Chat supports localization with all UI strings externalized.
 
+> **Note:** Currently only **English** is implemented. The i18n framework is in place and ready for adding new languages, but no additional language files ship with the project yet.
+
 ## Overview
 
 The localization system provides:
 - Centralized string management
 - Type-safe string access
 - Template string support with parameters
-- Easy addition of new languages
+- Infrastructure for adding new languages
 
 ## Usage
 
@@ -78,6 +80,8 @@ getText('myFeature.description', 'dynamic')
 ```
 
 ## Adding New Languages
+
+> The steps below describe how you **would** add a new language. This infrastructure is not yet wired up — you'll need to implement a language registry and selection mechanism.
 
 1. Create a new language file (e.g., `src/localization/es.ts`):
 

@@ -145,43 +145,6 @@ DATASOURCES=api                            # "api" or "mock"
 STREAMING=enabled                          # "enabled" or "disabled"
 ```
 
-### Runtime Config (Docker/Helm)
-
-When deployed as a Docker container, all `VITE_*` variables can be injected at runtime via environment variables -- no rebuild needed. The `docker-entrypoint.sh` script writes them to `config.js` before nginx starts.
-
-```
-Helm values → K8s ConfigMap → Pod env vars → docker-entrypoint.sh → config.js → Browser
-```
-
-The frontend reads config via `env()` from `src/config/runtime.ts`:
-
-```ts
-import { env } from "@/config/runtime";
-const apiUrl = env("VITE_API_URL", "/api");
-```
-
-Fallback order: runtime config (Docker) → build-time `VITE_*` → default value.
-
-See [Docker Runtime Configuration](/3-development/deployment.md#docker-runtime-configuration) for the full variable reference.
-
-Toggle between mock and API at runtime (development only - disabled in production unless `ENABLE_ADMIN_ROUTES=true`):
-
-```bash
-curl -X POST http://localhost:3001/api/admin/datasource/toggle
-```
-
 ## Reference Server
 
 An Express server is included in `server/`. See [server/README.md](../server/README.md) for setup. This is optional - implement the [API contract](#api-contract) above with any backend.
-
-## Patches
-
-Fluent Copilot component fixes via `patch-package`:
-
-- ChatInput overflow and button positioning
-
-Applied automatically on `npm install`.
-
----
-
-_Last updated: 2026-02-24_

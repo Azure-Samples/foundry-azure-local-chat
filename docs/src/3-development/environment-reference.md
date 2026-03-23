@@ -39,7 +39,7 @@ Set by wizard step ③. `AI_MODE` determines which other variables are needed.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `VITE_API_URL` | auto-detect | Backend API URL -- required for `DEPLOY_SCOPE=frontend`, auto-detected otherwise. In Docker, can be overridden at runtime via env var (see [Docker Runtime Configuration](/3-development/deployment.md#docker-runtime-configuration)) |
+| `VITE_API_URL` | `/api` | Backend API URL — defaults to `/api` (proxied to `localhost:3001` in dev, relative path in production). Required for `DEPLOY_SCOPE=frontend` when backend is on a different host. In Docker, can be overridden at runtime via env var (see [Docker Runtime Configuration](/3-development/deployment.md#docker-runtime-configuration)) |
 | `STREAMING` | `enabled` | `enabled` or `disabled` -- SSE streaming for responses |
 | `CORS_ORIGINS` | `auto` | `auto` detects from frontend ingress URL at deploy time, `*` allows all origins, or a specific URL |
 | `ENABLE_ADMIN_ROUTES` | `false` | Enable `/api/admin/*` endpoints for runtime toggles |
