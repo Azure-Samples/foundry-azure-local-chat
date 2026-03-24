@@ -120,7 +120,7 @@ function Print-ConfigSummary {
         $RG = if ($env:AZURE_RESOURCE_GROUP) { $env:AZURE_RESOURCE_GROUP } else { $script:RES_RESOURCE_GROUP }
         $NS = if ($env:AZURE_NAMESPACE) { $env:AZURE_NAMESPACE } else { $script:RES_NAMESPACE }
         $NC_VAL = if ($env:NODE_COUNT) { $env:NODE_COUNT } else { "2" }
-        $VM_VAL = if ($env:VM_SIZE) { $env:VM_SIZE } else { "Standard_D2s_v5" }
+        $VM_VAL = if ($env:VM_SIZE) { $env:VM_SIZE } else { "Standard_D2s_v6" }
 
         _Row "Infra" "${YELLOW}Infra${NC}"
         _Row "  Cluster:      $CLUSTER" "  Cluster:      ${VAL}${CLUSTER}${NC}"

@@ -17,6 +17,10 @@ AUTO_YES=false
 for arg in "$@"; do
     [[ "$arg" == "-y" || "$arg" == "--yes" ]] && AUTO_YES=true
 done
+# Auto-detect CI / non-interactive: if stdin is not a terminal, skip prompts
+if [ ! -t 0 ]; then
+    AUTO_YES=true
+fi
 # Check if preprovision set auto-deploy flag (temp file, survives azd provision)
 if [ "$AUTO_YES" != "true" ]; then
     _env_name=""
