@@ -28,7 +28,7 @@ azd init
 
 azd env set ARC_PREFIX "your-prefix"
 azd env set NODE_COUNT "2"
-azd env set VM_SIZE "Standard_D2s_v6"
+azd env set VM_SIZE "Standard_D2s_v3"
 azd env set DEPLOY_MODE "k8s"
 azd env set DATASOURCES "api"
 azd env set AI_PROJECT_ENDPOINT "https://<name>.cognitiveservices.azure.com/api/projects/<project>"
@@ -56,7 +56,7 @@ azd up
 |----------|----------|-------------|
 | `ARC_PREFIX` | ✅ | Resource name prefix — all names derived from this |
 | `NODE_COUNT` | ✅ | AKS node count (e.g. `2`) |
-| `VM_SIZE` | ✅ | AKS VM size (e.g. `Standard_D2s_v6`) |
+| `VM_SIZE` | ✅ | AKS VM size (e.g. `Standard_D2s_v3`) |
 | `DEPLOY_MODE` | ✅ | `k8s` or `containerapp` |
 | `DEPLOY_SCOPE` | optional | `all` (default), `frontend`, or `backend` |
 | `AZURE_LOCATION` | auto | Set during `azd init` (region dropdown) |

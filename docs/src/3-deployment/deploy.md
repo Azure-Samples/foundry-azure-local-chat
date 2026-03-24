@@ -165,7 +165,7 @@ Complete reference for all `azd` environment variables. Most are set automatical
 | `RECIPE` | - | - | `all` (full stack + MS Foundry), `dev` (mock + cheapest VM), or empty for wizard |
 | `ARC_PREFIX` | auto | - | Auto-derived from azd env name — do NOT set manually |
 | `NODE_COUNT` | ✅ | - | AKS node count |
-| `VM_SIZE` | ✅ | - | AKS VM size (e.g. `Standard_D2s_v6`) |
+| `VM_SIZE` | ✅ | - | AKS VM size (e.g. `Standard_D2s_v3`) |
 | `DEPLOY_MODE` | ✅ | - | `k8s` or `containerapp` |
 | `DEPLOY_SCOPE` | - | `all` | `all`, `frontend`, or `backend` |
 | `AZURE_LOCATION` | auto | - | Set during `azd init` |

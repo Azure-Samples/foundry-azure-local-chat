@@ -38,7 +38,7 @@ init_test_env() {
 AZURE_ENV_NAME="test-deploy"
 ARC_PREFIX="test-deploy"
 ARC_NAMESPACE="test-deploy-ns"
-AZURE_LOCATION="eastus2"
+AZURE_LOCATION="eastus"
 AZURE_SUBSCRIPTION_ID="00000000-0000-0000-0000-000000000000"
 AZURE_RESOURCE_GROUP="test-deploy-rg"
 AZURE_AKS_CLUSTER_NAME="test-deploy-cluster"
@@ -48,7 +48,7 @@ AZURE_WI_CLIENT_ID="00000000-0000-0000-0000-000000000001"
 AZURE_WI_PRINCIPAL_ID="00000000-0000-0000-0000-000000000002"
 DEPLOY_MODE="k8s"
 NODE_COUNT=2
-VM_SIZE="Standard_D2s_v6"
+VM_SIZE="Standard_D2s_v3"
 IMAGE_TAG="latest"
 BACKEND_REPLICAS=1
 FRONTEND_REPLICAS=1
@@ -329,7 +329,7 @@ for recipe in "all" "dev"; do
             set_test_val "STREAMING" "enabled"
             set_test_val "CORS_ORIGINS" "auto"
             set_test_val "ENABLE_ADMIN_ROUTES" "false"
-            set_test_val "VM_SIZE" "Standard_D2s_v6"
+            set_test_val "VM_SIZE" "Standard_D2s_v3"
             set_test_val "NODE_COUNT" "2"
             ;;
         dev)
@@ -474,10 +474,10 @@ rm -rf "$ROUNDTRIP_DIR"
 
 # Test: RG tag TSV parsing with None values
 label="RG tag TSV with None values"
-TAG_LINE=$'eastus2\tall\tNone\tmock\tenabled\tauto\tfalse\tNone\ttrue'
+TAG_LINE=$'eastus\tall\tNone\tmock\tenabled\tauto\tfalse\tNone\ttrue'
 IFS=$'\t' read -r LOC RCP SCP DS STR CRS ADM AGT DDN <<< "$TAG_LINE"
 errors=""
-[ "$LOC" != "eastus2" ] && errors="LOC=$LOC"
+[ "$LOC" != "eastus" ] && errors="LOC=$LOC"
 [ "$RCP" != "all" ] && errors="${errors} RCP=$RCP"
 [ "$SCP" != "None" ] && errors="${errors} SCP should be None"
 [ "$DDN" != "true" ] && errors="${errors} DDN=$DDN"

@@ -28,8 +28,8 @@ param location string
 @description('AKS node count (recommended: 2 for dev, 3+ for prod)')
 param nodeCount int = 2
 
-@description('AKS VM size (recommended: Standard_D2s_v6 for dev, D4s_v6 for prod)')
-param vmSize string = 'Standard_D2s_v6'
+@description('AKS VM size (recommended: Standard_D2s_v3 for dev, D4s_v6 for prod)')
+param vmSize string = 'Standard_D2s_v3'
 
 @description('MS Foundry endpoint (optional — leave empty for mock mode). Also injected into the pod at deploy time.')
 param aiProjectEndpoint string = ''
