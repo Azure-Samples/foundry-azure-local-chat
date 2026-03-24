@@ -169,7 +169,7 @@ apply_defaults() {
     _def_default "AI_MODEL_NAME" "gpt-4o-mini"
     _def_default "AI_MODEL_VERSION" "2024-07-18"
     _def_default "AI_MODEL_CAPACITY" "1"
-    _def_default "VM_SIZE" "Standard_D2s_v3"
+    _def_default "VM_SIZE" "Standard_D2s_v5"
     _def_default "NODE_COUNT" "2"
     _def_default "AZURE_LOCATION" "eastus2"
     _def_default "BACKEND_REPLICAS" "1"

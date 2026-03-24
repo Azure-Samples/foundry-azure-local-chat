@@ -201,7 +201,7 @@ function Apply-Defaults {
     _Def-Default "AI_MODEL_NAME" "gpt-4o-mini"
     _Def-Default "AI_MODEL_VERSION" "2024-07-18"
     _Def-Default "AI_MODEL_CAPACITY" "1"
-    _Def-Default "VM_SIZE" "Standard_D2s_v3"
+    _Def-Default "VM_SIZE" "Standard_D2s_v5"
     _Def-Default "NODE_COUNT" "2"
     _Def-Default "AZURE_LOCATION" "eastus2"
     _Def-Default "BACKEND_REPLICAS" "1"

@@ -15,7 +15,7 @@ azd init
 
 azd env set ARC_PREFIX "your-prefix"
 azd env set NODE_COUNT "2"
-azd env set VM_SIZE "Standard_D4s_v3"
+azd env set VM_SIZE "Standard_D4s_v5"
 azd env set DEPLOY_MODE "containerapp"    # or "k8s"
 
 azd up
@@ -28,7 +28,7 @@ azd init
 
 azd env set ARC_PREFIX "your-prefix"
 azd env set NODE_COUNT "2"
-azd env set VM_SIZE "Standard_D2s_v3"
+azd env set VM_SIZE "Standard_D2s_v5"
 azd env set DEPLOY_MODE "k8s"
 azd env set DATASOURCES "api"
 azd env set AI_PROJECT_ENDPOINT "https://<name>.cognitiveservices.azure.com/api/projects/<project>"
@@ -45,7 +45,7 @@ azd up
 | TLS | Self-signed (custom domain for real cert) | Free `*.k4apps.io` + auto TLS |
 | API URL | Auto-detected from ingress IP | Auto-detected from backend FQDN |
 | Regions | Any AKS region | 11 regions only |
-| Min VM | D2s_v3 | D4s_v3 |
+| Min VM | D2s_v5 | D4s_v5 |
 | Pods | ~32 | ~62 |
 | Offline | Yes | No |
 | Extra config | — | `CUSTOM_LOCATION_OID` required |
@@ -56,7 +56,7 @@ azd up
 |----------|----------|-------------|
 | `ARC_PREFIX` | ✅ | Resource name prefix — all names derived from this |
 | `NODE_COUNT` | ✅ | AKS node count (e.g. `2`) |
-| `VM_SIZE` | ✅ | AKS VM size (e.g. `Standard_D4s_v3`) |
+| `VM_SIZE` | ✅ | AKS VM size (e.g. `Standard_D2s_v5`) |
 | `DEPLOY_MODE` | ✅ | `k8s` or `containerapp` |
 | `DEPLOY_SCOPE` | optional | `all` (default), `frontend`, or `backend` |
 | `AZURE_LOCATION` | auto | Set during `azd init` (region dropdown) |

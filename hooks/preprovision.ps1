@@ -199,13 +199,13 @@ function Wizard-Infrastructure {
     Prompt-Val "NODE_COUNT" "AKS node count" "2" "" "Number of nodes in the AKS cluster (2 for dev, 3+ for prod)"
 
     # ── VM size selector — popular first, with expand + custom ────
-    $POP_VM_V = @("Standard_B2s", "Standard_D2s_v3", "Standard_D4s_v3", "Standard_D2s_v5", "Standard_D4s_v5", "Standard_B4ms")
+    $POP_VM_V = @("Standard_B2s", "Standard_D2s_v5", "Standard_D4s_v5", "Standard_D2s_v3", "Standard_D4s_v3", "Standard_B4ms")
     $POP_VM_D = @(
         "Standard_B2s ${DIM}`u{2014} 2 vCPU, 4 GB (burstable, cheapest)${NC}"
-        "Standard_D2s_v3 ${DIM}`u{2014} 2 vCPU, 8 GB${NC} ${GREEN}(Recommended)${NC}"
-        "Standard_D4s_v3 ${DIM}`u{2014} 4 vCPU, 16 GB (prod)${NC}"
-        "Standard_D2s_v5 ${DIM}`u{2014} 2 vCPU, 8 GB (latest gen)${NC}"
-        "Standard_D4s_v5 ${DIM}`u{2014} 4 vCPU, 16 GB (latest gen)${NC}"
+        "Standard_D2s_v5 ${DIM}`u{2014} 2 vCPU, 8 GB${NC} ${GREEN}(Recommended)${NC}"
+        "Standard_D4s_v5 ${DIM}`u{2014} 4 vCPU, 16 GB (prod)${NC}"
+        "Standard_D2s_v3 ${DIM}`u{2014} 2 vCPU, 8 GB (prev gen)${NC}"
+        "Standard_D4s_v3 ${DIM}`u{2014} 4 vCPU, 16 GB (prev gen)${NC}"
         "Standard_B4ms ${DIM}`u{2014} 4 vCPU, 16 GB (burstable)${NC}"
     )
     $POP_VM_V += "__more__"; $POP_VM_V += "__custom__"
@@ -214,7 +214,7 @@ function Wizard-Infrastructure {
 
     Write-Host "  ${DIM}VM size for AKS nodes.${NC}"
     while ($true) {
-        Prompt-Select "VM_SIZE" "AKS VM size" $POP_VM_V $POP_VM_D "" "Standard_D2s_v3"
+        Prompt-Select "VM_SIZE" "AKS VM size" $POP_VM_V $POP_VM_D "" "Standard_D2s_v5"
         $VM_PICKED = Get-Val "VM_SIZE"
 
         if ($VM_PICKED -eq "__back__") {
@@ -231,9 +231,9 @@ function Wizard-Infrastructure {
                 "Standard_B2ms ${DIM}`u{2014} 2 vCPU, 8 GB (burstable)${NC}"
                 "Standard_B2s ${DIM}`u{2014} 2 vCPU, 4 GB (burstable, cheapest)${NC}"
                 "Standard_B4ms ${DIM}`u{2014} 4 vCPU, 16 GB (burstable)${NC}"
-                "Standard_D2s_v3 ${DIM}`u{2014} 2 vCPU, 8 GB${NC} ${GREEN}(Recommended)${NC}"
+                "Standard_D2s_v3 ${DIM}`u{2014} 2 vCPU, 8 GB (prev gen)${NC}"
                 "Standard_D2ds_v5 ${DIM}`u{2014} 2 vCPU, 8 GB (local SSD)${NC}"
-                "Standard_D2s_v5 ${DIM}`u{2014} 2 vCPU, 8 GB${NC}"
+                "Standard_D2s_v5 ${DIM}`u{2014} 2 vCPU, 8 GB${NC} ${GREEN}(Recommended)${NC}"
                 "Standard_D2s_v6 ${DIM}`u{2014} 2 vCPU, 8 GB (newest)${NC}"
                 "Standard_D2as_v5 ${DIM}`u{2014} 2 vCPU, 8 GB (AMD)${NC}"
                 "Standard_D4s_v3 ${DIM}`u{2014} 4 vCPU, 16 GB${NC}"
@@ -249,13 +249,13 @@ function Wizard-Infrastructure {
                 "Standard_F4s_v2 ${DIM}`u{2014} 4 vCPU, 8 GB (compute opt)${NC}"
                 "Standard_F8s_v2 ${DIM}`u{2014} 8 vCPU, 16 GB (compute opt)${NC}"
             )
-            Prompt-Select "VM_SIZE" "AKS VM size" $EXT_V $EXT_D "" "Standard_D2s_v3"
+            Prompt-Select "VM_SIZE" "AKS VM size" $EXT_V $EXT_D "" "Standard_D2s_v5"
             if ((Get-Val "VM_SIZE") -eq "__back__") { Save-Val "VM_SIZE" ""; continue }
             break
         } elseif ($VM_PICKED -eq "__custom__") {
             Save-Val "VM_SIZE" ""
-            Prompt-Val "VM_SIZE" "VM size name" "Standard_D2s_v3" "--required" `
-                "Enter the exact Azure VM size (e.g. Standard_D2s_v3, Standard_E4s_v5)"
+            Prompt-Val "VM_SIZE" "VM size name" "Standard_D2s_v5" "--required" `
+                "Enter the exact Azure VM size (e.g. Standard_D2s_v5, Standard_E4s_v5)"
             break
         } else {
             break
@@ -680,7 +680,7 @@ function Apply-Recipe {
             Save-Val "STREAMING" "enabled"
             Save-Val "CORS_ORIGINS" "auto"
             Save-Val "ENABLE_ADMIN_ROUTES" "false"
-            Save-Val "VM_SIZE" "Standard_D2s_v3"
+            Save-Val "VM_SIZE" "Standard_D2s_v5"
             Save-Val "NODE_COUNT" "2"
         }
         "dev" {

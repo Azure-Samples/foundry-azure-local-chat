@@ -48,7 +48,7 @@ AZURE_WI_CLIENT_ID="00000000-0000-0000-0000-000000000001"
 AZURE_WI_PRINCIPAL_ID="00000000-0000-0000-0000-000000000002"
 DEPLOY_MODE="k8s"
 NODE_COUNT=2
-VM_SIZE="Standard_D2s_v3"
+VM_SIZE="Standard_D2s_v5"
 IMAGE_TAG="latest"
 BACKEND_REPLICAS=1
 FRONTEND_REPLICAS=1
@@ -329,7 +329,7 @@ for recipe in "all" "dev"; do
             set_test_val "STREAMING" "enabled"
             set_test_val "CORS_ORIGINS" "auto"
             set_test_val "ENABLE_ADMIN_ROUTES" "false"
-            set_test_val "VM_SIZE" "Standard_D2s_v3"
+            set_test_val "VM_SIZE" "Standard_D2s_v5"
             set_test_val "NODE_COUNT" "2"
             ;;
         dev)
