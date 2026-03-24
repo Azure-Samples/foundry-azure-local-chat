@@ -85,7 +85,7 @@ A related option is VS Code Dev Containers, which will open the project in your 
 
 1. Start Docker Desktop (install it if not already installed)
 2. Open the project:
-    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](placeholder)
+    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Azure-Samples/foundry-azure-local-chat)
 3. In the VS Code window that opens, once the project files show up (this may take several minutes), open a terminal window.
 4. Sign into your Azure account:
 
