@@ -11,7 +11,7 @@ Complete guide for deploying foundry-azure-local-chat to Azure using `azd`.
 The fastest way to deploy — a recipe sets all defaults for you:
 
 ```bash
-azd env set RECIPE all    # full stack + MS Foundry (gpt-4o-mini, D2s_v5, 2 nodes)
+azd env set RECIPE all    # full stack + MS Foundry (gpt-4o-mini, D2s_v6, 2 nodes)
 azd up                    # prompts for subscription + location, recipe handles the rest
 ```
 
@@ -19,7 +19,7 @@ Available recipes:
 
 | Recipe | What you get                                                   |
 | ------ | -------------------------------------------------------------- |
-| `all`  | Full stack + MS Foundry (gpt-4o-mini, D2s_v5, 2 nodes)         |
+| `all`  | Full stack + MS Foundry (gpt-4o-mini, D2s_v6, 2 nodes)         |
 | `dev`  | Full stack + mock AI (B2s cheapest VM, admin enabled, CORS=\*) |
 
 > **Note:** `ARC_PREFIX` is auto-derived from the azd environment name. `azd env new my-chat` creates `my-chat-rg`, `my-chat-cluster`, etc.
@@ -165,7 +165,7 @@ Complete reference for all `azd` environment variables. Most are set automatical
 | `RECIPE` | - | - | `all` (full stack + MS Foundry), `dev` (mock + cheapest VM), or empty for wizard |
 | `ARC_PREFIX` | auto | - | Auto-derived from azd env name — do NOT set manually |
 | `NODE_COUNT` | ✅ | - | AKS node count |
-| `VM_SIZE` | ✅ | - | AKS VM size (e.g. `Standard_D2s_v5`) |
+| `VM_SIZE` | ✅ | - | AKS VM size (e.g. `Standard_D2s_v6`) |
 | `DEPLOY_MODE` | ✅ | - | `k8s` or `containerapp` |
 | `DEPLOY_SCOPE` | - | `all` | `all`, `frontend`, or `backend` |
 | `AZURE_LOCATION` | auto | - | Set during `azd init` |
