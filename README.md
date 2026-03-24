@@ -3,7 +3,7 @@
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Azure-Samples/foundry-azure-local-chat)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Azure-Samples/foundry-azure-local-chat)
 
-A reusable Chat UI for AI experiences, built on the OpenAI Conversations API standard and Fluent AI components. It connects to a MS Foundry project and is designed to be deployed on Azure Kubernetes Service (AKS) clusters. The application features a chat interface chat history, streaming responses, and a pluggable provider architecture that supports both live MS Foundry backends and an in-memory mock mode for offline development.
+A reusable Chat UI for AI experiences, built on the OpenAI Responses API standard and Fluent AI components. It connects to a MS Foundry project and is designed to be deployed on Azure Kubernetes Service (AKS) clusters. The application features a chat interface chat history, streaming responses, and a pluggable provider architecture that supports both live MS Foundry backends and an in-memory mock mode for offline development.
 
 Sample application code is included in this project. You can use or modify this app code or you can rip it out and include your own.
 
