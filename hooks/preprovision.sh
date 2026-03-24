@@ -37,6 +37,10 @@ AUTO_YES="${AUTO_YES:-false}"
 for arg in "$@"; do
     [[ "$arg" == "-y" || "$arg" == "--yes" ]] && AUTO_YES=true
 done
+# Auto-detect CI / non-interactive: if stdin is not a terminal, skip prompts
+if [ ! -t 0 ]; then
+    AUTO_YES=true
+fi
 export AUTO_YES
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
