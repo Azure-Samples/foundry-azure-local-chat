@@ -107,7 +107,7 @@ print_config_summary() {
     row "  RG:           ${RG}" "  RG:           ${VAL}${RG}${NC}"
     row "  Namespace:    ${NS}" "  Namespace:    ${VAL}${NS}${NC}"
     row "  Mode:         ${MODE}" "  Mode:         ${VAL}${MODE}${NC}"
-    row "  Nodes:        ${NODE_COUNT:-2} x ${VM_SIZE:-Standard_D2s_v5}" "  Nodes:        ${VAL}${NODE_COUNT:-2} x ${VM_SIZE:-Standard_D2s_v5}${NC}"
+    row "  Nodes:        ${NODE_COUNT:-2} x ${VM_SIZE:-Standard_D2s_v6}" "  Nodes:        ${VAL}${NODE_COUNT:-2} x ${VM_SIZE:-Standard_D2s_v6}${NC}"
     row "" ""
     fi
     row "Deploy" "${YELLOW}Deploy${NC}"

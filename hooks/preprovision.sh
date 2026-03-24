@@ -210,13 +210,13 @@ wizard_infrastructure() {
         "Number of nodes in the AKS cluster (2 for dev, 3+ for prod)"
 
     # ── VM size selector — popular first, with expand + custom ────
-    local POP_VM_V=("Standard_B2s" "Standard_D2s_v5" "Standard_D4s_v5" "Standard_D2s_v3" "Standard_D4s_v3" "Standard_B4ms")
+    local POP_VM_V=("Standard_B2s" "Standard_D2s_v6" "Standard_D4s_v6" "Standard_D2s_v5" "Standard_D4s_v5" "Standard_B4ms")
     local POP_VM_D=(
         "Standard_B2s ${DIM}— 2 vCPU, 4 GB (burstable, cheapest)${NC}"
-        "Standard_D2s_v5 ${DIM}— 2 vCPU, 8 GB${NC} ${GREEN}(Recommended)${NC}"
-        "Standard_D4s_v5 ${DIM}— 4 vCPU, 16 GB (prod)${NC}"
-        "Standard_D2s_v3 ${DIM}— 2 vCPU, 8 GB (prev gen)${NC}"
-        "Standard_D4s_v3 ${DIM}— 4 vCPU, 16 GB (prev gen)${NC}"
+        "Standard_D2s_v6 ${DIM}— 2 vCPU, 8 GB${NC} ${GREEN}(Recommended)${NC}"
+        "Standard_D4s_v6 ${DIM}— 4 vCPU, 16 GB (prod)${NC}"
+        "Standard_D2s_v5 ${DIM}— 2 vCPU, 8 GB (prev gen)${NC}"
+        "Standard_D4s_v5 ${DIM}— 4 vCPU, 16 GB (prev gen)${NC}"
         "Standard_B4ms ${DIM}— 4 vCPU, 16 GB (burstable)${NC}"
     )
     POP_VM_V+=("__more__" "__custom__")
@@ -225,7 +225,7 @@ wizard_infrastructure() {
     echo -e "  ${DIM}VM size for AKS nodes.${NC}"
     while true; do
         prompt_select "VM_SIZE" "AKS VM size" POP_VM_V POP_VM_D \
-            "" "Standard_D2s_v5"
+            "" "Standard_D2s_v6"
         local VM_PICKED; VM_PICKED=$(get_val "VM_SIZE")
 
         if [ "$VM_PICKED" = "__back__" ]; then
@@ -244,8 +244,8 @@ wizard_infrastructure() {
                 "Standard_B4ms ${DIM}— 4 vCPU, 16 GB (burstable)${NC}"
                 "Standard_D2s_v3 ${DIM}— 2 vCPU, 8 GB (prev gen)${NC}"
                 "Standard_D2ds_v5 ${DIM}— 2 vCPU, 8 GB (local SSD)${NC}"
-                "Standard_D2s_v5 ${DIM}— 2 vCPU, 8 GB${NC} ${GREEN}(Recommended)${NC}"
-                "Standard_D2s_v6 ${DIM}— 2 vCPU, 8 GB (newest)${NC}"
+                "Standard_D2s_v5 ${DIM}— 2 vCPU, 8 GB${NC}"
+                "Standard_D2s_v6 ${DIM}— 2 vCPU, 8 GB (newest)${NC} ${GREEN}(Recommended)${NC}"
                 "Standard_D2as_v5 ${DIM}— 2 vCPU, 8 GB (AMD)${NC}"
                 "Standard_D4s_v3 ${DIM}— 4 vCPU, 16 GB${NC}"
                 "Standard_D4s_v5 ${DIM}— 4 vCPU, 16 GB${NC}"
@@ -259,13 +259,13 @@ wizard_infrastructure() {
                 "Standard_F2s_v2 ${DIM}— 2 vCPU, 4 GB (compute opt)${NC}"
                 "Standard_F4s_v2 ${DIM}— 4 vCPU, 8 GB (compute opt)${NC}"
                 "Standard_F8s_v2 ${DIM}— 8 vCPU, 16 GB (compute opt)${NC}")
-            prompt_select "VM_SIZE" "AKS VM size" EXT_V EXT_D "" "Standard_D2s_v5"
+            prompt_select "VM_SIZE" "AKS VM size" EXT_V EXT_D "" "Standard_D2s_v6"
             [ "$(get_val "VM_SIZE")" = "__back__" ] && { save_val "VM_SIZE" ""; continue; }
             break
         elif [ "$VM_PICKED" = "__custom__" ]; then
             save_val "VM_SIZE" ""
-            prompt_val "VM_SIZE" "VM size name" "Standard_D2s_v5" --required \
-                "Enter the exact Azure VM size (e.g. Standard_D2s_v5, Standard_E4s_v5)"
+            prompt_val "VM_SIZE" "VM size name" "Standard_D2s_v6" --required \
+                "Enter the exact Azure VM size (e.g. Standard_D2s_v6, Standard_E4s_v5)"
             break
         else
             break
@@ -666,7 +666,7 @@ apply_recipe() {
             save_cached "STREAMING" "enabled"
             save_cached "CORS_ORIGINS" "auto"
             save_cached "ENABLE_ADMIN_ROUTES" "false"
-            save_cached "VM_SIZE" "Standard_D2s_v5"
+            save_cached "VM_SIZE" "Standard_D2s_v6"
             save_cached "NODE_COUNT" "2"
             ;;
         dev)
