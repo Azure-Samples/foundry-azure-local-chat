@@ -63,7 +63,13 @@ You can run this template virtually by using GitHub Codespaces. The button will 
      azd auth login --use-device-code
     ```
 
-4. Provision the Azure resources and deploy your code:
+4. Sign into Azure CLI:
+
+    ```shell
+     az login
+    ```
+
+5. Provision the Azure resources and deploy your code:
 
     ```shell
     azd up
@@ -71,7 +77,7 @@ You can run this template virtually by using GitHub Codespaces. The button will 
 
     The interactive setup wizard will guide you through selecting your subscription, AKS configuration, AI mode (mock/create/bring-your-own), and deployment settings.
 
-5. Once deployment completes, `azd` will print the application URL. Open it in your browser to start chatting.
+6. Once deployment completes, `azd` will print the application URL. Open it in your browser to start chatting.
 
 ### VS Code Dev Containers
 
@@ -87,13 +93,19 @@ A related option is VS Code Dev Containers, which will open the project in your 
      azd auth login
     ```
 
-5. Provision the Azure resources and deploy your code:
+5. Sign into Azure CLI:
+
+    ```shell
+     az login
+    ```
+
+6. Provision the Azure resources and deploy your code:
 
     ```shell
     azd up
     ```
 
-6. Configure a CI/CD pipeline:
+7. Configure a CI/CD pipeline:
 
     ```shell
     azd pipeline config
