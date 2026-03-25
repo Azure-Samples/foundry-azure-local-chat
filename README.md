@@ -3,7 +3,7 @@
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Azure-Samples/foundry-azure-local-chat)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Azure-Samples/foundry-azure-local-chat)
 
-A reusable Chat UI for AI experiences, built on the OpenAI Responses API standard and Fluent AI components. It connects to a MS Foundry project and is designed to be deployed on Azure Kubernetes Service (AKS) clusters. The application features a chat interface chat history, streaming responses, and a pluggable provider architecture that supports both live MS Foundry backends and an in-memory mock mode for offline development.
+A reusable Chat UI for AI experiences, built on the Azure OpenAI Responses API standard and Fluent AI components. It connects to a MS Foundry project and is designed to be deployed on Azure Kubernetes Service (AKS) clusters. The application features a chat interface chat history, streaming responses, and a pluggable provider architecture that supports both live MS Foundry backends and an in-memory mock mode for offline development.
 
 Sample application code is included in this project. You can use or modify this app code or you can rip it out and include your own.
 
@@ -139,8 +139,15 @@ A related option is VS Code Dev Containers, which will open the project in your 
     ```shell
     azd auth login
     ```
+3. Installation:
 
-3. Provision and deploy the project to Azure:
+    ```shell
+    npm install
+
+    cd server && npm install && cd ..
+    ```
+
+4. Provision and deploy the project to Azure:
 
     ```shell
     azd up
@@ -148,9 +155,9 @@ A related option is VS Code Dev Containers, which will open the project in your 
 
     The interactive setup wizard will guide you through selecting your subscription, AKS configuration, AI mode (mock/create/bring-your-own), and deployment settings.
 
-4. Once deployment completes, `azd` will print the application URL. Open it in your browser to start chatting.
+5. Once deployment completes, `azd` will print the application URL. Open it in your browser to start chatting.
 
-5. Configure a CI/CD pipeline:
+6. Configure a CI/CD pipeline:
 
     ```shell
     azd pipeline config
@@ -240,6 +247,7 @@ This template has [Managed Identity](https://learn.microsoft.com/entra/identity/
 
 ## Resources
 
+* [Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/responses?view=foundry-classic&tabs=rest-api)
 * [Getting Started Guide](docs/src/1-getting-started/quickstart.md)
 * [Deployment](docs/src/3-deployment/deploy.md)
 * [Custom Providers Guide](docs/src/3-deployment/custom-providers.md)
