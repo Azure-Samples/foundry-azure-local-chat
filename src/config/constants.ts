@@ -36,7 +36,7 @@ const DEFAULTS: TypedConfigOptions = {
   "app.name": "Foundry Azure Local Chat",
   "app.version": "1.0.0",
   "app.title": "Foundry Azure Local Chat",
-  "app.favicon": "/favicon.ico",
+  "app.favicon": "",
 
   // Copilot settings
   "copilot.mode": "canvas",
@@ -53,11 +53,11 @@ const DEFAULTS: TypedConfigOptions = {
 
   // Sidebar icon settings
   "sidebar.showIcon": false,
-  "sidebar.icon": "", // Path to icon in /public (e.g., "/copilot-icon.svg")
+  "sidebar.icon": "", // Path to icon in /public
 
   // Chat message icon settings
-  "chat.showMessageIcon": true,
-  "chat.messageIcon": "/copilot-icon.svg", // Path to icon in /public
+  "chat.showMessageIcon": false,
+  "chat.messageIcon": "", // Path to icon in /public
 
   // New chat button icon settings
   "newChat.showIcon": true,
