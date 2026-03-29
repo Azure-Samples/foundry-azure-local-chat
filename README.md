@@ -102,6 +102,14 @@ This template has [Managed Identity](https://learn.microsoft.com/entra/identity/
 * [Custom Providers Guide](docs/src/3-deployment/custom-providers.md)
 * [Microsoft Foundry documentation](https://learn.microsoft.com/azure/ai-studio/)
 
+<br/>
+
+## Provide Feedback
+
+Have questions, find a bug, or want to request a feature? [Submit a new issue](https://github.com/Azure-Samples/foundry-azure-local-chat/issues) on this repo and we'll connect.
+
+<br/>
+
 ## Disclaimers
 
 This template provides a chat user interface that connects to AI services, including Microsoft Foundry and Azure OpenAI. The AI-generated responses surfaced through this application may include ungrounded content, meaning they are not verified by any reliable source or based on any factual data. Users of this template are responsible for determining the accuracy, validity, and suitability of any AI-generated content for their intended purposes. Users should not rely on AI-generated output as a source of truth or as a substitute for human judgment or expertise.
