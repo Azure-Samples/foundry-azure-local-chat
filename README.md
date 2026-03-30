@@ -44,7 +44,7 @@ This project framework provides the following features:
 
 <br/>
 
-| ![Application screenshot showing the Foundry Azure Local Chat interface with sidebar chat history and message input](docs\images\output_screenshot.png) |
+| ![Application screenshot showing the Foundry Azure Local Chat interface with sidebar chat history and message input](docs/images/output_screenshot.png) |
 |---|
 
 ### Demo Video
