@@ -61,7 +61,7 @@ This template uses **gpt-4o-mini** which may not be available in all Azure regio
 
 <br/>
 
-[Click here to launch the deployment guide](./docs/DeploymentGuide.md)
+[Click here to launch the deployment guide](./docs/src/3-deployment/quickstart-deploy.md)
 
 <br/>
 
