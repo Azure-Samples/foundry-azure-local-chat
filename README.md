@@ -1,22 +1,32 @@
 # Foundry Azure Local Chat
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Azure-Samples/foundry-azure-local-chat)
-[![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Azure-Samples/foundry-azure-local-chat)
-
-A reusable Chat UI for AI experiences, built on the Azure OpenAI Responses API standard and Fluent AI components. It connects to a MS Foundry project and is designed to be deployed on Azure Kubernetes Service (AKS) clusters. The application features a chat interface chat history, streaming responses, and a pluggable provider architecture that supports both live MS Foundry backends and an in-memory mock mode for offline development.
+A reusable Chat UI for AI experiences, built on the Azure OpenAI Responses API standard and Fluent AI components. It connects to a MS Foundry project and is designed to be deployed on Azure Kubernetes Service (AKS) clusters. The application features a chat interface, chat history, streaming responses, and a pluggable provider architecture that supports both live MS Foundry backends and an in-memory mock mode for offline development.
 
 Sample application code is included in this project. You can use or modify this app code or you can rip it out and include your own.
 
-[Features](#features) • [Getting Started](#getting-started) • [Guidance](#guidance)
+<br/>
+
+<div align="center">
+
+[**ARCHITECTURE**](#architecture) \| [**FEATURES**](#features) \| [**GETTING STARTED**](#getting-started) \| [**GUIDANCE**](#guidance)
+
+</div>
+<br/>
 
 
-## Important Security Notice
+> <sub> **Note**: This template, the application code and configuration it contains, has been built to showcase Microsoft Azure specific services and tools. We strongly advise our customers not to make this code part of their production environments without implementing or enabling additional security features. For a more comprehensive list of best practices and security recommendations for Intelligent Applications, visit the [Security](#security) section.</sub>
 
-This template, the application code and configuration it contains, has been built to showcase Microsoft Azure specific services and tools. We strongly advise our customers not to make this code part of their production environments without implementing or enabling additional security features.
+<br/>
 
+## Architecture
 
-<!-- Documentation page is a WIP, this link does not exist yet -->
-For a more comprehensive list of best practices and security recommendations for Intelligent Applications, [visit our official documentation](#link)”
+### Architecture Diagram
+
+![ Architecture diagram showing that user input is provided to the AKS hybrid cluster, which hosts the frontend and  backend as separate
+  pods behind an nginx ingress. With Workload Identity and OIDC token exchange through a managed identity, the backend calls the
+  MS Foundry agent to generate responses](docs/images/architecture.png)
+
+<br/>
 
 ## Features
 
@@ -32,15 +42,14 @@ This project framework provides the following features:
 
   See the [Quick Start Guide](docs/src/1-getting-started/quickstart.md) for details.
 
-### Architecture Diagram
+<br/>
 
-
-![ Architecture diagram showing that user input is provided to the AKS hybrid cluster, which hosts the frontend and  backend as separate
-  pods behind an nginx ingress. With Workload Identity and OIDC token exchange through a managed identity, the backend calls the
-  MS Foundry agent to generate responses](docs/images/architecture.png)
+| ![Application screenshot showing the Foundry Azure Local Chat interface with sidebar chat history and message input](docs\images\output_screenshot.png) |
+|---|
 
 ### Demo Video
- [▶️ Watch the demo](docs/demo.mp4)
+
+[▶️  Watch the demo](docs/demo.mp4)
 
 ## Getting Started
 
@@ -50,181 +59,21 @@ This template uses **gpt-4o-mini** which may not be available in all Azure regio
 
   * We recommend using **East US** or **Sweden Central**
 
-### GitHub Codespaces
+<br/>
 
-You can run this template virtually by using GitHub Codespaces. The button will open a web-based VS Code instance in your browser:
+[Click here to launch the deployment guide](./docs/src/3-deployment/quickstart-deploy.md)
 
-1. Open the template (this may take several minutes)
-    [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Azure-Samples/foundry-azure-local-chat)
-2. Open a terminal window
-3. Sign into your Azure account:
+<br/>
 
-    ```shell
-     azd auth login --use-device-code
-    ```
+| [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Azure-Samples/foundry-azure-local-chat) | [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Azure-Samples/foundry-azure-local-chat) |
+|---|---|
 
-4. Sign into Azure CLI:
+<br/>
 
-    ```shell
-     az login
-    ```
+> ⚠️ **Important:** To avoid unnecessary costs, remember to take down your app if it's no longer in use,
+> either by deleting the resource group in the Portal or running `azd down`.
 
-5. Provision the Azure resources and deploy your code:
-
-    ```shell
-    azd up
-    ```
-
-    The interactive setup wizard will guide you through selecting your subscription, AKS configuration, AI mode (mock/create/bring-your-own), and deployment settings.
-
-6. Once deployment completes, `azd` will print the application URL. Open it in your browser to start chatting.
-
-### VS Code Dev Containers
-
-A related option is VS Code Dev Containers, which will open the project in your local VS Code using the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers):
-
-1. Start Docker Desktop (install it if not already installed)
-2. Open the project:
-    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Azure-Samples/foundry-azure-local-chat)
-3. In the VS Code window that opens, once the project files show up (this may take several minutes), open a terminal window.
-4. Sign into your Azure account:
-
-    ```shell
-     azd auth login
-    ```
-
-5. Sign into Azure CLI:
-
-    ```shell
-     az login
-    ```
-
-6. Provision the Azure resources and deploy your code:
-
-    ```shell
-    azd up
-    ```
-
-7. Configure a CI/CD pipeline:
-
-    ```shell
-    azd pipeline config
-    ```
-
-### Local Environment
-
-#### Prerequisites
-
-* [Node.js 20+](https://nodejs.org/) and npm
-* Install [azd](https://aka.ms/install-azd)
-  * Windows: `winget install microsoft.azd`
-  * Linux: `curl -fsSL https://aka.ms/install-azd.sh | bash`
-  * MacOS: `brew tap azure/azd && brew install azd`
-* [Python 3.9+](https://www.python.org/downloads/)
-* [Git](https://git-scm.com/downloads)
-* \[Windows Only\] [PowerShell](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows) (latest version, with `pwsh.exe` on PATH)
-* This template uses **gpt-4o-mini** which may not be available in all Azure regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
-  * We recommend using **East US** or **Sweden Central**
-
-#### Quickstart
-
-1. Bring down the template code:
-
-    ```shell
-    azd init --template foundry-azure-local-chat
-    ```
-
-2. Sign into your Azure account:
-
-    ```shell
-    azd auth login
-    ```
-3. Installation:
-
-    ```shell
-    npm install
-
-    cd server && npm install && cd ..
-    ```
-
-4. Provision and deploy the project to Azure:
-
-    ```shell
-    azd up
-    ```
-
-    The interactive setup wizard will guide you through selecting your subscription, AKS configuration, AI mode (mock/create/bring-your-own), and deployment settings.
-
-5. Once deployment completes, `azd` will print the application URL. Open it in your browser to start chatting.
-
-6. Configure a CI/CD pipeline:
-
-    ```shell
-    azd pipeline config
-    ```
-
-#### Local Development
-
-There are two ways to run the app locally without deploying to Azure:
-
-##### Option 1 — Mock Mode (no Azure required)
-
-Runs entirely offline with simulated AI responses. Ideal for UI development.
-
-```bash
-# Install frontend dependencies
-npm install
-
-# Install server dependencies
-cd server && npm install && cd ..
-
-# Copy the environment template and set mock mode
-cp server/.env.example server/.env
-# Edit server/.env and set DATASOURCES=mock
-
-# Terminal 1: Start the frontend
-npm run dev
-
-# Terminal 2: Start the server
-cd server && npm run start
-```
-
-The frontend runs at `http://localhost:5173` and the server at `http://localhost:3001`.
-
-##### Option 2 — API Mode (connects to Microsoft Foundry)
-
-Uses a real Microsoft Foundry agent for live AI responses.
-
-1. Ensure you are logged in to Azure:
-
-    ```shell
-    az login
-    ```
-
-2. Configure the server environment:
-
-    ```bash
-    cp server/.env.example server/.env
-    ```
-
-    Edit `server/.env` and set:
-
-    ```
-    DATASOURCES=api
-    AI_PROJECT_ENDPOINT=https://<your-resource>.services.ai.azure.com/api/projects/<your-project>
-    AI_AGENT_ID=<agent-name>:<version>
-    ```
-
-3. Install dependencies and start both processes:
-
-    ```bash
-    # Terminal 1: Start the frontend
-    npm install
-    npm run dev
-
-    # Terminal 2: Start the server
-    cd server && npm install && npm run start
-    ```
+<br/>
 
 ## Guidance
 
@@ -252,3 +101,21 @@ This template has [Managed Identity](https://learn.microsoft.com/entra/identity/
 * [Deployment](docs/src/3-deployment/deploy.md)
 * [Custom Providers Guide](docs/src/3-deployment/custom-providers.md)
 * [Microsoft Foundry documentation](https://learn.microsoft.com/azure/ai-studio/)
+
+<br/>
+
+## Provide Feedback
+
+Have questions, find a bug, or want to request a feature? [Submit a new issue](https://github.com/Azure-Samples/foundry-azure-local-chat/issues) on this repo and we'll connect.
+
+<br/>
+
+## Disclaimers
+
+This template provides a chat user interface that connects to AI services, including Microsoft Foundry and Azure OpenAI. The AI-generated responses surfaced through this application may include ungrounded content, meaning they are not verified by any reliable source or based on any factual data. Users of this template are responsible for determining the accuracy, validity, and suitability of any AI-generated content for their intended purposes. Users should not rely on AI-generated output as a source of truth or as a substitute for human judgment or expertise.
+
+This release is intended as a proof of concept only, and is not a finished or polished product. It is not intended for commercial use or distribution, and is subject to change or discontinuation without notice. Any planned deployment of this release or its output should include comprehensive testing and evaluation to ensure it is fit for purpose and meets the user's requirements and expectations. Microsoft does not guarantee the quality, performance, reliability, or availability of this release or its output, and does not provide any warranty or support for it.
+
+This Software requires the use of third-party components which are governed by separate proprietary or open-source licenses as identified below, and you must comply with the terms of each applicable license in order to use the Software. You acknowledge and agree that this license does not grant you a license or other right to use any such third-party proprietary or open-source components.
+
+To the extent that the Software includes components or code used in or derived from Microsoft products or services, including without limitation Microsoft Azure Services (collectively, "Microsoft Products and Services"), you must also comply with the Product Terms applicable to such Microsoft Products and Services. You acknowledge and agree that the license governing the Software does not grant you a license or other right to use Microsoft Products and Services. Nothing in the license or this ReadMe file will serve to supersede, amend, terminate or modify any terms in the Product Terms for any Microsoft Products and Services.

@@ -59,9 +59,15 @@ export const Chat = ({
 
   // -- Derived State --
   const isFirstLoad = !activeConversation && !isInitializing && messages.length === 0;
+  const showMessageIcon = config.isEnabled("chat.showMessageIcon");
   const avatarIcon = React.useMemo(
-    () => <AppIcon showKey="chat.showMessageIcon" iconKey="chat.messageIcon" size={mode === "canvas" ? 24 : 20} />,
-    [mode],
+    () =>
+      showMessageIcon ? (
+        <AppIcon showKey="chat.showMessageIcon" iconKey="chat.messageIcon" size={mode === "canvas" ? 24 : 20} />
+      ) : (
+        <div style={{ width: mode === "canvas" ? 24 : 20 }} />
+      ),
+    [mode, showMessageIcon],
   );
 
   // ============================================================================
