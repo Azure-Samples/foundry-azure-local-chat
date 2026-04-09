@@ -85,7 +85,7 @@ require_az_extension() {
     command -v az &>/dev/null || return
     if ! az extension show --name "$ext" &>/dev/null; then
         echo "  ℹ️  Installing az extension: ${ext}..."
-        if ! az extension add --name "$ext" --yes 2>/dev/null; then
+        if ! az extension add --name "$ext" --yes; then
             _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ Failed to install az extension: ${ext}"
         fi
     fi
