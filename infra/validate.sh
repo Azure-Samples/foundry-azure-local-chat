@@ -85,8 +85,10 @@ require_az_extension() {
     command -v az &>/dev/null || return
     if ! az extension show --name "$ext" &>/dev/null; then
         echo "  ℹ️  Installing az extension: ${ext}..."
-        if ! az extension add --name "$ext" --yes; then
-            _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ Failed to install az extension: ${ext}"
+        # PIP_BREAK_SYSTEM_PACKAGES bypasses PEP 668 restrictions on CI runners
+        local ext_output
+        if ! ext_output=$(PIP_BREAK_SYSTEM_PACKAGES=1 az extension add --name "$ext" --yes 2>&1); then
+            _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ Failed to install az extension: ${ext}\n     ${ext_output}"
         fi
     fi
 }
