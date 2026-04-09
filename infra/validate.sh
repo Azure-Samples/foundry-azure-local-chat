@@ -86,12 +86,7 @@ require_az_extension() {
     if ! az extension show --name "$ext" &>/dev/null; then
         echo "  ℹ️  Installing az extension: ${ext}..."
         if ! az extension add --name "$ext" --yes 2>/dev/null; then
-            # Retry after upgrading pip (fixes Python 3.13+ compatibility)
-            echo "  ℹ️  Retrying with pip upgrade..."
-            pip install --upgrade pip 2>/dev/null
-            if ! az extension add --name "$ext" --yes; then
-                _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ Failed to install az extension: ${ext}"
-            fi
+            _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ Failed to install az extension: ${ext}"
         fi
     fi
 }
