@@ -77,45 +77,17 @@ require_cli() {
     fi
 }
 
-# ─── require_pip ─────────────────────────────────────────────
-# Ensures the Python pip module is available (needed by az extension add).
-# Some CI environments (e.g. Debian Trixie) omit it — install if missing.
-require_pip() {
-    if python3 -m pip --version &>/dev/null; then
-        return
-    fi
-    echo "  ℹ️  Installing python3-pip (required by az extension add)..."
-    if command -v apt-get &>/dev/null; then
-        sudo apt-get install -y -qq python3-pip 2>&1 | tail -3 || true
-    else
-        _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ python3-pip is missing and apt-get is not available"
-    fi
-}
-
 # ─── require_az_extension <name> ─────────────────────────────
 # Checks that an Azure CLI extension is installed; installs if missing.
-# Automatically ensures pip is available first.
 # Skipped if az is not available (require_cli "az" already logged that).
 require_az_extension() {
     local ext="$1"
     command -v az &>/dev/null || return
-    if az extension show --name "$ext" &>/dev/null; then
-        return
-    fi
-    require_pip
-    echo "  ℹ️  Installing az extension: ${ext}..."
-    echo "  ℹ️  az CLI: $(az version --query '"azure-cli"' -o tsv 2>/dev/null || echo 'unknown')"
-    echo "  ℹ️  Python: $(python3 --version 2>/dev/null || echo 'not found')"
-    echo "  ℹ️  pip: $(python3 -m pip --version 2>/dev/null || echo 'not found')"
-    # Run in a subshell with venv deactivated to prevent .venv's Python 3.13
-    # from interfering with az CLI's pip-based extension install
-    local ext_output
-    if ! ext_output=$(
-        unset VIRTUAL_ENV PYTHONHOME
-        PATH=$(echo "$PATH" | tr ':' '\n' | grep -v '\.venv' | tr '\n' ':')
-        az extension add --name "$ext" --yes 2>&1
-    ); then
-        _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ Failed to install az extension: ${ext}\n     ${ext_output}"
+    if ! az extension show --name "$ext" &>/dev/null; then
+        echo "  ℹ️  Installing az extension: ${ext}..."
+        if ! az extension add --name "$ext" --yes 2>/dev/null; then
+            _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ Failed to install az extension: ${ext}"
+        fi
     fi
 }
 
