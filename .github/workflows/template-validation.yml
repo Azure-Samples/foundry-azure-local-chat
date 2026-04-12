@@ -30,6 +30,7 @@ jobs:
         with:
           useDevContainer: false
         env:
+          PYTHONUTF8: "1"
           TEMPLATE_VALIDATION_MODE: true
           AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
           AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
