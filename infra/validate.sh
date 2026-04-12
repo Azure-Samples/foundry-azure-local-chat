@@ -107,8 +107,14 @@ require_az_extension() {
     echo "  ℹ️  az CLI: $(az version --query '"azure-cli"' -o tsv 2>/dev/null || echo 'unknown')"
     echo "  ℹ️  Python: $(python3 --version 2>/dev/null || echo 'not found')"
     echo "  ℹ️  pip: $(python3 -m pip --version 2>/dev/null || echo 'not found')"
+    # Run in a subshell with venv deactivated to prevent .venv's Python 3.13
+    # from interfering with az CLI's pip-based extension install
     local ext_output
-    if ! ext_output=$(az extension add --name "$ext" --yes 2>&1); then
+    if ! ext_output=$(
+        unset VIRTUAL_ENV PYTHONHOME
+        PATH=$(echo "$PATH" | tr ':' '\n' | grep -v '\.venv' | tr '\n' ':')
+        az extension add --name "$ext" --yes 2>&1
+    ); then
         _VALIDATE_ERRORS="${_VALIDATE_ERRORS}\n  ❌ Failed to install az extension: ${ext}\n     ${ext_output}"
     fi
 }
