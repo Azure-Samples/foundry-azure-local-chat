@@ -51,4 +51,5 @@ jobs:
           AI_AGENT_ID: ${{ vars.AI_AGENT_ID }}
 
       - name: print result
+        shell: bash
         run: cat ${{ steps.validation.outputs.resultFile }}
