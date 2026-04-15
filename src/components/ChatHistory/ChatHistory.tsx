@@ -8,13 +8,14 @@
  */
 import * as React from "react";
 
-import { Button, makeStyles, tokens, useId } from "@fluentui/react-components";
+import { Button, Link, makeStyles, tokens, useId } from "@fluentui/react-components";
 import { PanelLeftContract20Regular } from "@fluentui/react-icons";
 import {
   CopilotNavCategory,
   CopilotNavCategoryItem,
   CopilotNavDrawer,
   CopilotNavDrawerBody,
+  CopilotNavDrawerFooter,
   CopilotNavDrawerHeader,
   CopilotNavItem,
   CopilotNavSubItem,
@@ -67,7 +68,7 @@ const useStyles = makeStyles({
   emptyState: {
     padding: `${tokens.spacingVerticalL} ${tokens.spacingHorizontalM}`,
     fontSize: tokens.fontSizeBase200,
-    textAlign: "center",
+    textAlign: "left",
     color: tokens.colorNeutralForeground3,
   },
   drawerBody: {
@@ -225,6 +226,18 @@ export const ChatHistory = ({
             </CopilotNavSubItemGroup>
           </CopilotNavCategory>
         </CopilotNavDrawerBody>
+
+        <CopilotNavDrawerFooter>
+          <div style={{ width: "100%", textAlign: "left" }}>
+            <Link
+              href="https://go.microsoft.com/fwlink/?LinkId=521839"
+              target="_blank"
+              style={{ fontSize: tokens.fontSizeBase200 }}
+            >
+              Privacy Statement
+            </Link>
+          </div>
+        </CopilotNavDrawerFooter>
       </CopilotNavDrawer>
       {showToggleButton && !open && (
         <div className={styles.sidebarToggle}>
